@@ -39,12 +39,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Eigene Legende erstellen
   const legendContainer = document.getElementById('income_doughnut_legend');
-  const legendItems = myDoughnutChart.data.labels.map((label, index) => {
-    const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
-    return `<li class="d-flex align-items-center mb-2">
-              <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
-              ${label}
-            </li>`;
-  });
-  legendContainer.innerHTML = `<ul class="list-unstyled">${legendItems.join('')}</ul>`;
+
+// Daten aus dem ersten Datensatz holen
+const dataValues = myDoughnutChart.data.datasets[0].data;
+
+// Summe der Werte berechnen
+const total = dataValues.reduce((acc, val) => acc + val, 0);
+
+// Für jedes Label einen Listeneintrag erzeugen (mit Farbkästchen, Label und Wert)
+const legendItems = myDoughnutChart.data.labels.map((label, index) => {
+  const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
+  const value = dataValues[index];
+
+  return `
+    <li class="d-flex align-items-center mb-2">
+      <!-- Farbkasten -->
+      <span
+        style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;">
+      </span>
+      <!-- Label links -->
+      <span class="me-auto">${label}</span>
+      <!-- Wert rechts -->
+      <span>${value.toLocaleString()}</span>
+    </li>`;
+});
+
+// Liste zusammenbauen und Gesamtsumme anhängen
+legendContainer.innerHTML = `
+  <ul class="list-unstyled m-0">
+    ${legendItems.join('')}
+    <hr class="my-2" />
+    <li class="d-flex fw-bold">
+      <span class="me-auto">Total</span>
+      <span>${total.toLocaleString()}</span>
+    </li>
+  </ul>
+`;
 });
