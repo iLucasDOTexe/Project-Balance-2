@@ -30,33 +30,42 @@
       </nav>
       <!--End Navbar-->
       <!--Start Overview Container-->
-      <div class="container text-center mt-4">
+      <div class="container-fluid text-center mt-4 px-4">
         <div class="row row-cols-5">
           <div class="col d-flex">
-            <div class="border border-dark p-2 bg-white flex-fill">
-              <h5>Verfügbare Einnahmen</h5>
-              <p>1234,56 € (12,34%)</p>
+            <div class="border border-dark p-2 bg-white flex-fill text-start rounded-1">
+              <h5 class="fw-bold">Verfügbare Einnahmen</h5>
+              <p class="mt-4">
+                <span class="fw-bold fs-3 text-success">1234,56€</span>
+                <span class="fs-3 text-success">(12,34%)</span>
+              </p>
             </div>
           </div>
           <div class="col d-flex">
-            <div class="border border-dark p-2 bg-white flex-fill">
-              <h5>Getätigte Ausgaben</h5>
-              <p>1234,56 € (12,34%)</p>
+            <div class="border border-dark p-2 bg-white flex-fill text-start rounded-1">
+              <h5 class="fw-bold">Getätigte Ausgaben</h5>
+              <p class="mt-4">
+                <span class="fw-bold fs-3 text-danger">1234,56€</span>
+                <span class="fs-3 text-danger">(12,34%)</span>
+              </p>
             </div>
           </div>
           <div class="col d-flex">
-            <div class="border border-dark p-2 bg-white flex-fill">
-              <h5>Sparquote</h5>
-              <p>12,34% (1234,56 €)</p>
+            <div class="border border-dark p-2 bg-white flex-fill text-start rounded-1">
+              <h5 class="fw-bold">Sparquote</h5>
+              <p class="mt-4">
+                <span class="fw-bold fs-2 text-primary">12,34%</span>
+                <span class="fs-2 text-primary">(1234,56€)</span>
+              </p>
             </div>
           </div>
           <div class="col">
             <div>
               <!-- Dropdown 1: Year -->
-              <div class="border border-dark bg-white">
-                <h5>Jahr</h5>
+              <div class="border border-dark bg-white rounded-1">
+                <h5 class="fw-bold">Jahr</h5>
                 <div>
-                  <button class="btn btn-info dropdown-toggle w-100" type="button" id="dropdownMenuButtonJahr" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle w-100 rounded-1" type="button" id="dropdownMenuButtonJahr" data-bs-toggle="dropdown" aria-expanded="false">
                     2024
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonJahr">
@@ -67,10 +76,10 @@
                 </div>
               </div>
               <!-- Dropdown 2: Period -->
-              <div class="border border-top-0 border-dark bg-white">
-                <h5>Zeitraum</h5>
+              <div class="border border-top-0 border-dark bg-white rounded-1">
+                <h5 class="fw-bold">Zeitraum</h5>
                 <div class="dropdown">
-                  <button class="btn btn-info dropdown-toggle w-100" type="button" id="dropdownMenuButtonZeitraum" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle w-100 rounded-1" type="button" id="dropdownMenuButtonZeitraum" data-bs-toggle="dropdown" aria-expanded="false">
                     August
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonZeitraum">
@@ -93,12 +102,12 @@
             </div>
           </div>
           <div class="col d-flex">
-            <div class="border border-dark bg-white flex-fill">
-              <button type="button" class="btn btn-success h-100 w-100">
+            <div class="border border-dark flex-fill rounded-1">
+              <button type="button" class="btn btn-success h-100 w-100 rounded-1">
                 <div class="flex-grow-1 d-flex align-items-center justify-content-center">
                   <h1 class="m-0">+</h1>
                 </div>
-                <p class="text-center m-0">Add Transaction</p>
+                <p class="text-center m-0 fw-bold fs-4">Add Transaction</p>
               </button>
           </div>
         </div>
