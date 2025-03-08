@@ -31,30 +31,70 @@
       <!--End Navbar-->
       <!--Start Overview Container-->
       <div class="container text-center mt-1">
-        <div class="row row-cols-5 g-4">
-          <div class="col">
-            <div class="border border-dark p-2 bg-white">
+        <div class="row row-cols-5">
+          <div class="col d-flex">
+            <div class="border border-dark p-2 bg-white flex-fill">
               <h5>Verfügbare Einnahmen</h5>
               <p>1234,56 € (12,34%)</p>
             </div>
           </div>
-          <div class="col">
-            <div class="border border-dark p-2 bg-white">
+          <div class="col d-flex">
+            <div class="border border-dark p-2 bg-white flex-fill">
               <h5>Getätigte Ausgaben</h5>
               <p>1234,56 € (12,34%)</p>
             </div>
           </div>
-          <div class="col">
-            <div class="border border-dark p-2 bg-white">
+          <div class="col d-flex">
+            <div class="border border-dark p-2 bg-white flex-fill">
               <h5>Sparquote</h5>
               <p>12,34% (1234,56 €)</p>
             </div>
           </div>
           <div class="col">
-            <div class="border border-dark p-2 bg-white">Jahr 2024 Zeitraum August</div>
+            <div>
+              <!-- Dropdown 1: Year -->
+              <div class="border border-dark bg-white">
+                <h5>Jahr</h5>
+                <div>
+                  <button class="btn btn-info dropdown-toggle w-100" type="button" id="dropdownMenuButtonJahr" data-bs-toggle="dropdown" aria-expanded="false">
+                    2024
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonJahr">
+                    <li><a class="dropdown-item" href="#">2024</a></li>
+                    <li><a class="dropdown-item" href="#">2023</a></li>
+                    <li><a class="dropdown-item" href="#">2022</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- Dropdown 2: Period -->
+              <div class="border border-top-0 border-dark bg-white">
+                <h5>Zeitraum</h5>
+                <div class="dropdown">
+                  <button class="btn btn-info dropdown-toggle w-100" type="button" id="dropdownMenuButtonZeitraum" data-bs-toggle="dropdown" aria-expanded="false">
+                    August
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonZeitraum">
+                    <li><a class="dropdown-item" href="#">Januar</a></li>
+                    <li><a class="dropdown-item" href="#">Februar</a></li>
+                    <li><a class="dropdown-item" href="#">März</a></li>
+                    <li><a class="dropdown-item" href="#">April</a></li>
+                    <li><a class="dropdown-item" href="#">Mai</a></li>
+                    <li><a class="dropdown-item" href="#">Juni</a></li>
+                    <li><a class="dropdown-item" href="#">Juli</a></li>
+                    <li><a class="dropdown-item" href="#">August</a></li>
+                    <li><a class="dropdown-item" href="#">September</a></li>
+                    <li><a class="dropdown-item" href="#">Oktober</a></li>
+                    <li><a class="dropdown-item" href="#">November</a></li>
+                    <li><a class="dropdown-item" href="#">Dezember</a></li>
+                    <li><a class="dropdown-item" href="#">Ganzes Jahr</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col">
-            <div class="border border-dark p-2 bg-white">Add Transaction Button</div>
+          <div class="col d-flex">
+            <div class="border border-dark p-2 bg-white flex-fill">
+              <p>Add Transaction Button</p>
           </div>
         </div>
       </div>
