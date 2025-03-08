@@ -117,7 +117,7 @@
       <div class="container-fluid text-center mt-4 px-0">
         <div class="row">
           <!--Start Transaction List Container-->
-          <div class="col-6">
+          <div class="col-4">
             <div>
               <div class="bg-dark text-white pb-1 pt-3 flex-fill">
                 <h5>Transaktionen - 2024 [August]</h5>
@@ -190,24 +190,62 @@
           </div>
           <!--End Transaction List Container-->
           <!--Start Statistics Container-->
-          <div class="col-6">
-            <div class="bg-dark text-white pb-1 pt-3 flex-fill">
+          <div class="col-8">
+            <div class="bg-dark text-white pb-1 pt-3">
               <h5>Statistiken - 2024 [August]</h5>
             </div>
-            <div class="mt-1 px-2 flex-fill text-start">
+            <div class="mt-1 px-2 text-start">
               <div class="row">
-                <div class="col border border-dark bg-white mx-1">Statistik1</div>
-                <div class="col border border-dark bg-white mx-1">Statistik2</div>
+                <!--Start Income Doughnut Chart Container-->
+                <div class="col border border-dark bg-white mx-1 p-2">
+                  <h5 class="fw-bold">Einkommen</h5>
+                  <div class="row">
+                    <div class="col-7 d-flex align-items-center justify-content-center">
+                      <canvas id="income_doughnut" class="w-100"></canvas>
+                    </div>
+                    <div class="col-5" id="income_doughnut_legend"></div>
+                  </div>
+                </div>
+                <!--End Income Doughnut Chart Container-->
+                <div class="col border border-dark bg-white mx-1 p-2">
+                  <h5 class="fw-bold">Bilanz</h5>
+                </div>
               </div>
               <div class="row mt-2">
-                <div class="col border border-dark bg-white mx-1">Statistik3</div>
-                <div class="col border border-dark bg-white mx-1">Statistik4</div>
+                <!--Start Spendings Doughnut Chart Container-->
+                <div class="col border border-dark bg-white mx-1 p-2">
+                  <h5 class="fw-bold">Ausgaben</h5>
+                  <div class="row">
+                    <div class="col-7 d-flex align-items-center justify-content-center">
+                      <canvas id="spendings_doughnut" class="w-100"></canvas>
+                    </div>
+                    <div class="col-5" id="spendings_doughnut_legend"></div>
+                  </div>
+                </div>
+                <!--End Spendings Doughnut Chart Container-->
+                <!--Start Savings Doughnut Chart Container-->
+                <div class="col border border-dark bg-white mx-1 p-2">
+                  <h5 class="fw-bold">Sparen</h5>
+                  <div class="row">
+                    <div class="col-7 d-flex align-items-center justify-content-center">
+                      <canvas id="savings_doughnut" class="w-100"></canvas>
+                    </div>
+                    <div class="col-5" id="savings_doughnut_legend"></div>
+                  </div>
+                </div>
+                <!--End Savings Doughnut Chart Container-->
               </div>
             </div>
           </div>
+          <!--End Statistics Container-->
         </div>
       </div>
-      <!--Start Statistics Container-->
       <!--End Main Container-->
+      <!--Start Scripts-->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="./src/income_doughnut.js"></script>
+      <script src="./src/spendings_doughnut.js"></script>
+      <script src="./src/savings_doughnut.js"></script>
+      <!--End Scripts-->
     </body>
 </html>
