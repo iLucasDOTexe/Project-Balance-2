@@ -1,11 +1,15 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("I am inside  docker whoop whoop!");
-});
+app.use(express.static('C:\\Users\\Lucas\\Documents\\GitHub\\Project-Balance\\Frontend\\'));
+app.use(express.json())
 
-const port = 4400;
-app.listen(port, () => {
-    console.log('Express listening at http://localhost:${port}');
+app.listen(4444, 'localhost', () => {
+    console.log("App listening on port 4444");
+})
+
+//Custom 404 page
+app.use((req, res) => {
+    res.status(404);
+    res.send('<h1>Congratulations. You searched for a side, which does not exist (404)</h1>');
 });
