@@ -4,7 +4,7 @@ const app = express();
 app.use(express.static('/Frontend'));
 app.use(express.json())
 
-app.listen(4444, 'localhost', () => {
+app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");
 })
 
