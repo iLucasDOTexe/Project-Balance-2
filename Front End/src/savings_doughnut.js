@@ -3,23 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
   const myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['Gehalt', 'Dividenden', 'Geschenke', 'Rückerstattung'],
+      labels: ['Notgroschen', 'Spaßkonto', 'Aktien & ETFs', 'Krypto', 'Gold'],
       datasets: [{
         label: 'Statistik',
-        data: [12, 19, 3, 5],
+        data: [18800.00, 19888.88, 31245.87, 50000.85, 50000.48],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)'
+          'rgb(23, 37, 84)',
+          'rgb(30, 64, 175)',
+          'rgb(37, 99, 235)',
+          'rgb(96, 165, 250)',
+          'rgb(191, 219, 254)',
         ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)'
-        ],
-        borderWidth: 1
       }]
     },
     options: {
@@ -45,23 +39,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
     const value = dataValues[index];
     return `
-      <li class="d-flex align-items-center mb-2">
-        <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
-        <span class="me-auto">${label}</span>
-        <span>${value.toLocaleString()}</span>
-      </li>
-    `;
-  });
+    <li class="d-flex align-items-center mb-2">
+      <!-- Farbkasten -->
+      <span
+        style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;">
+      </span>
+      <!-- Label links -->
+      <span class="me-auto">${label}</span>
+      <!-- Wert rechts -->
+      <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+    </li>`;
+});
 
-  // Gesamte Liste inklusive einer Total-Zeile zusammenbauen
-  legendContainer.innerHTML = `
-    <ul class="list-unstyled m-0">
-      ${legendItems.join('')}
-      <hr class="my-2" />
-      <li class="d-flex fw-bold">
-        <span class="me-auto">Total</span>
-        <span>${total.toLocaleString()}</span>
-      </li>
-    </ul>
-  `;
+// Liste zusammenbauen und Gesamtsumme anhängen
+legendContainer.innerHTML = `
+  <ul class="list-unstyled m-0">
+    ${legendItems.join('')}
+    <hr class="my-2" />
+    <li class="d-flex fw-bold">
+      <span class="me-auto">Total</span>
+      <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+    </li>
+  </ul>
+`;
 });

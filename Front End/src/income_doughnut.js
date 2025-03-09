@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
       labels: ['Gehalt', 'Dividenden', 'Geschenke', 'Rückerstattung', 'Verkäufe', 'Sonstige'],
       datasets: [{
         label: 'Statistik',
-        data: [12, 19, 3, 5, 7, 9],
+        data: [31224.91, 13884.15, 20880.00, 37749.48, 25885.00, 11500.00],
         backgroundColor: [
           'rgb(5, 46, 22)',
           'rgb(20, 83, 45)',
@@ -51,7 +51,7 @@ const legendItems = myDoughnutChart.data.labels.map((label, index) => {
       <!-- Label links -->
       <span class="me-auto">${label}</span>
       <!-- Wert rechts -->
-      <span>${value.toLocaleString()}</span>
+      <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
     </li>`;
 });
 
@@ -62,7 +62,7 @@ legendContainer.innerHTML = `
     <hr class="my-2" />
     <li class="d-flex fw-bold">
       <span class="me-auto">Total</span>
-      <span>${total.toLocaleString()}</span>
+      <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
     </li>
   </ul>
 `;
