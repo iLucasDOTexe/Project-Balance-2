@@ -2,7 +2,7 @@ FROM node:latest
 
 WORKDIR ~/apps/running
 
-COPY ~/apps/ProjectBalance/Project-Balance-2/Backend/package*.json ./
+COPY ../ProjectBalance/Project-Balance-2/Backend/package*.json ./
 
 RUN npm install
 
