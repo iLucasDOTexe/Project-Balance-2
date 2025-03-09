@@ -208,6 +208,11 @@
                 <!--End Income Doughnut Chart Container-->
                 <div class="col border border-dark bg-white mx-1 p-2">
                   <h5 class="fw-bold">Bilanz</h5>
+                  <div class="row">
+                    <div class="col d-flex align-items-center justify-content-center">
+                      <canvas id="balance_bar" class="w-100"></canvas>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="row mt-2">
@@ -215,10 +220,10 @@
                 <div class="col border border-dark bg-white mx-1 p-2">
                   <h5 class="fw-bold">Ausgaben</h5>
                   <div class="row">
-                    <div class="col-7 d-flex align-items-center justify-content-center">
+                    <div class="col-8 d-flex align-items-center justify-content-center">
                       <canvas id="spendings_doughnut" class="w-100"></canvas>
                     </div>
-                    <div class="col-5" id="spendings_doughnut_legend"></div>
+                    <div class="col-4" id="spendings_doughnut_legend"></div>
                   </div>
                 </div>
                 <!--End Spendings Doughnut Chart Container-->
@@ -242,7 +247,7 @@
       <!--End Main Container-->
       <footer class="text-center bg-white border-top">
         <div class="text-center text-bg-dark mt-4 pt-2 pb-2">
-          © 2024 Copyright: Lucas Schwöbel (iLucas.exe)
+          © 2025 Copyright: Lucas Schwöbel (iLucas.exe)
         </div>
       </footer>
       <!--Start Scripts-->
@@ -250,6 +255,7 @@
       <script src="./src/income_doughnut.js"></script>
       <script src="./src/spendings_doughnut.js"></script>
       <script src="./src/savings_doughnut.js"></script>
+      <script src="./src/balance_bar.js"></script>
       <!--End Scripts-->
     </body>
 </html>
