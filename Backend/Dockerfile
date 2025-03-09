@@ -1,8 +1,8 @@
 FROM node:latest
 
-WORKDIR /running
+WORKDIR /home/lucaspi/apps/running
 
-COPY /home/lucaspi/apps/Project-Balance-2/Backend/package*.json ./
+COPY package*.json ./
 
 RUN npm install
 
