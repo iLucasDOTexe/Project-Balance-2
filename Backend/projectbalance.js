@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static('C:\\Users\\Lucas\\Documents\\GitHub\\Project-Balance\\Frontend\\'));
+app.use(express.static('~/apps/ProjectBalance/Project-Balance-2/Frontend/'));
 app.use(express.json())
 
 app.listen(4444, 'localhost', () => {
