@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['Mobili.', 'Heimunt.', 'Ausgehen', 'Freizeit', 'Wohnen', 'Versich.', 'Lebensh.', 'Telekom.', 'Mediena.', 'Philant.', 'Finanzk.', 'Urlaub', 'Bildung', 'Auswand.', 'Sonstig.'],
+      labels: ['Mobilität', 'Heimunterhalt.', 'Ausgehen', 'Freizeitaktiv.', 'Wohnen', 'Versicherungen', 'Lebenshaltung', 'Telekommunika.', 'Medienabos', 'Philantropie', 'Finanzkosten', 'Urlaub', 'Bildung', 'Auswanderung', 'Sonstiges'],
       datasets: [{
         label: 'Statistik',
         data: [12000.00, 11190.00, 11350.54, 11575.46, 70100.00, 11100.50, 81111.11, 11115.000, 61111.11, 11119.11, 22222.44, 11111.88, 14563.27, 21111.11, 11114.89],
