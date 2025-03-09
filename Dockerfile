@@ -6,7 +6,7 @@ COPY Backend/package*.json ./
 
 RUN npm install
 
-COPY Backend/projectbalaance.js ./
+COPY Backend/projectbalance.js ./
 
 COPY Frontend ./Frontend
 
