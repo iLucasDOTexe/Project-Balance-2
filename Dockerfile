@@ -2,11 +2,11 @@ FROM node:latest
 
 WORKDIR /home/lucaspi/apps/running
 
-COPY package*.json ./
+COPY Backend/package*.json ./
 
 RUN npm install
 
-COPY projectbalance.js ./
+COPY Backend/projectbalance.js ./
 
 COPY Frontend ./Frontend
 
