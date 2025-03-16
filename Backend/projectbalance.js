@@ -1,5 +1,15 @@
 const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 const app = express();
+const dbPath = path.join(__dirname, 'data', 'pb.sqlite3');
+
+let db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        return console.error("Connection error with database: ", err.message);
+    }
+    console.log("Database connected");
+});
 
 app.use(express.static('Frontend'));
 app.use(express.json())

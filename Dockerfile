@@ -1,6 +1,6 @@
 FROM node:latest
 
-WORKDIR /home/lucaspi/apps/running
+WORKDIR /home/lucaspi/apps/ProjectBalanceApp/running
 
 COPY Backend/package*.json ./
 
