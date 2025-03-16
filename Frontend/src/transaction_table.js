@@ -16,7 +16,7 @@ function loadTransactions() {
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton_${index}" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_${index}">
                             <li><a class="dropdown-item" href="#">Bearbeiten</a></li>
-                            <li><a class="dropdown-item" href="#">Löschen</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="deleteTransaction(${tx.id}, '${tx.transactionType}')">Löschen</a></li>
                         </ul>
                     </div>
                 </td>`;
