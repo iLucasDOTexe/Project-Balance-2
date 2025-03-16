@@ -12,7 +12,7 @@ function loadTransactions() {
                 <td>${tx.category}</td>
                 <td>${tx.value > 0 ? '+' : ''}${tx.value}€</td>
                 <td>⋮</td>`;
-            tbody.body.appendChild(tr);
+            tbody.appendChild(tr);
         });
     })
     .catch(error => console.error('Error while loading transactions:', error));
