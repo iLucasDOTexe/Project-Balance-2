@@ -34,23 +34,15 @@ const categories = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM vollständig geladen – modal_form.js wird ausgeführt");//
     const modalForm = document.forms.ModalForm;
-    console.log("ModalForm:", modalForm);
-    if (!modalForm) {
-        console.error("ModalForm wurde nicht gefunden. Bitte prüfen Sie das name-Attribut im Formular.");//
-    }
     const transactionSelect = modalForm.transactionSelection;
     const categorySelect = modalForm.categorySelection;
-    console.log("Transaction Select:", transactionSelect, "Category Select:", categorySelect);//
 
     transactionSelect.addEventListener('change', e => {
         let selectedType = e.target.value;
-        console.log("Transaktionstyp geändert:", selectedType);//
         categorySelect.innerHTML = '';
         if (categories[selectedType] && categories[selectedType].length > 0) {
             categories[selectedType].forEach(cat => {
-                console.log("Füge Kategorie hinzu:", cat);//
                 const option = document.createElement('option');
                 option.value = cat.value;
                 option.textContent = cat.text;
