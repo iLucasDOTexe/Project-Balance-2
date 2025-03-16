@@ -105,7 +105,15 @@ function sendFormData(event) {
     .then(response => response.json())
     .then(result => {
       console.log('Erfolgreich:', result);
-      // Hier können Sie z. B. das Formular zurücksetzen oder eine Erfolgsmeldung anzeigen.
+      form.reset();
+      const modalEl = document.getElementById('modal-add');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) {
+        modal.hide();
+      } else {
+        new bootstrap.Modal(modalEl).hide();
+      }
+      window.location.reload();
     })
     .catch(error => {
       console.error('Fehler:', error);
