@@ -134,6 +134,26 @@ app.get('/availableIncome', (req, res) => {
     });
 });
 
+app.get('/spendingsMade', (req, res) => {
+    db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income", (err, incomeRow) => {
+        if (err) {
+            console.error("Error calculating income sum: ", err.message);
+            return res.status(500).json({ error: err.message });
+        }
+        const incomeSum = incomeRow.incomeSum;
+        db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS spendingsSum FROM Spendings", (err, spendingRow) => {
+            if (err) {
+                console.error("Error calculating spendings sum: ", err.message);
+                return res.status(500).json({ error: err.message });
+            }
+            const spendingsSum = spendingRow.spendingsSum;
+            const absolute = spendingsSum;
+            const relative = incomeSum ? (absolute / incomeSum) * 100 : 0;
+            res.json({ absolute, relative });
+        });
+    });
+});
+
 app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");
 })

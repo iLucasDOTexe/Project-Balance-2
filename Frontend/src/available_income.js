@@ -2,7 +2,7 @@ function loadAvailableIncome() {
     fetch('/availableIncome')
         .then(response => response.json())
         .then(data => {
-            console.log("Verfügbare Einnahmen:", data);
+            console.log("Available income:", data);
             const absoluteFormatted = Number(data.absolute).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
             const relativeFormatted = '(' + Number(data.relative).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%)';
             document.getElementById('absoluteIncome').textContent = absoluteFormatted;
