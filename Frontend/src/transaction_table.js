@@ -40,7 +40,7 @@ function deleteTransaction(id, transactionType) {
     .then(response => response.json())
     .then(data => {
         console.log("Delete successful:", data);
-        loadTransactions();
+        window.location.reload();
     })
     .catch(error => console.error("Error deleting transaction:", error));
 }
