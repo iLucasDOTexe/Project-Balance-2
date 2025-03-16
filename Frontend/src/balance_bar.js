@@ -1,48 +1,52 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('balance_bar').getContext('2d');
-  
-    const trackedBarChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-        datasets: [
-          {
-            label: 'Income',
-            data: [141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54, 141123.54],
-            backgroundColor: 'rgb(5, 46, 22)', 
-            stack: 'Stack 1'
-          },
-          {
-            label: 'Expenses',
-            data: [371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42, 371896.42],
-            backgroundColor: 'rgb(69, 10, 10)',
-            stack: 'Stack 2'
-          },
-          {
-            label: 'Savings',
-            data: [169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08, 169936.08],
-            backgroundColor: 'rgb(23, 37, 84)',
-            stack: 'Stack 2'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            stacked: false
-          },
-          y: {
-            stacked: true
-          }
+  // Hole zuerst die Daten vom neuen API-Endpunkt
+  fetch('/monthlyData')
+    .then(response => response.json())
+    .then(data => {
+      const ctx = document.getElementById('balance_bar').getContext('2d');
+      const trackedBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.labels, // z. B. ['Jan', 'Feb', ... , 'Dez']
+          datasets: [
+            {
+              label: 'Income',
+              data: data.income, // Aggregierte Werte für Income pro Monat
+              backgroundColor: 'rgb(5, 46, 22)', 
+              stack: 'Stack 1'
+            },
+            {
+              label: 'Expenses',
+              data: data.expenses, // Aggregierte Werte für Expenses pro Monat
+              backgroundColor: 'rgb(69, 10, 10)',
+              stack: 'Stack 2'
+            },
+            {
+              label: 'Savings',
+              data: data.savings, // Aggregierte Werte für Savings pro Monat
+              backgroundColor: 'rgb(23, 37, 84)',
+              stack: 'Stack 2'
+            }
+          ]
         },
-        plugins: {
-          legend: {
-            display: false,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              stacked: false
+            },
+            y: {
+              stacked: true
+            }
+          },
+          plugins: {
+            legend: {
+              display: false,
+            }
           }
         }
-      }
-    });
-  });
-  
+      });
+    })
+    .catch(error => console.error('Error loading monthly data:', error));
+});
