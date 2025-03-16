@@ -36,10 +36,10 @@ app.use(express.static('Frontend'));
 app.use(express.json());
 
 app.post('/newTransaction', (req, res) => {
-    const { transactionType, transactionName, transactionDate, transactionValue, transactionCategory } = req.body;
+    const {transactionType, transactionName, transactionDate, transactionValue, transactionCategory} = req.body;
     if (transactionType === 'income') {
-        const sql = `INSERT INTO Income (Transaction_Name, Transaction_Value, Transaction_Date) VALUES (?, ?, ?)`;
-        db.run(sql, [transactionName, transactionValue, transactionDate], function(err) {
+        const sql = `INSERT INTO Income (Transaction_Category, Transaction_Value, Transaction_Date) VALUES (?, ?, ?)`;
+        db.run(sql, [transactionCategory, transactionValue, transactionDate], function(err) {
             if (err) {
                 console.error("Error inserting Income: ", err.message);
                 return res.status(500).json({error: err.message});
