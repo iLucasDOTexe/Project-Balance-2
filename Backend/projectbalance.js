@@ -76,7 +76,7 @@ app.get('/transactionTable', (req, res) => {
             console.error("Error while calling transactions: ", err.message);
             return res.status(500).json({error: err.message});
         }
-        res.json({transaction: rows});
+        res.json({transactions: rows});
     });
 });
 
