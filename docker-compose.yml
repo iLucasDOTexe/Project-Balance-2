@@ -5,7 +5,7 @@ services:
     ports:
       - "4444:4444"
     volumes:
-      -dbdata:/home/lucaspi/apps/data
+      -dbdata:/home/lucaspi/ProjectBalanceApp/apps/data
 
 volumes:
   dbdata: 
