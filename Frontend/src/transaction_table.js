@@ -1,5 +1,5 @@
 function loadTransactions() {
-    fetch('/transactions')
+    fetch('/transactionTable')
     .then(response => response.json())
     .then(data => {
         const tbody = document.querySelector('table tbody');
