@@ -69,6 +69,17 @@ app.post('/newTransaction', (req, res) => {
     }
 });
 
+app.get('/transactionTable', (req, res) => {
+    const sql = 'SELECT Transaction_Date AS date, Transaction_Name AS name, \'Einnahmen\' AS category, Transaction_Value AS value FROM Income UNION ALL SELECT Transaction_Date, Transaction_Name, Transaction_Category, Transaction_Value FROM Savings UNION ALL SELECT Transaction_Date, Transaction_Name, \'Ausgaben\' AS category, Transaction_Value FROM Spendings ORDER BY date DESC';
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            console.error("Error while calling transactions: ", err.message);
+            return res.status(500).json({error: err.message});
+        }
+        res.json({transaction: rows});
+    });
+});
+
 app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");
 })
