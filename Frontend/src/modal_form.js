@@ -2,34 +2,34 @@ const ModalForm = document.forms.ModalForm;
 const checkbox = document.getElementById('taxationCheck')
 const categories = {
     income: [
-        {value: 'salary', text: 'Gehalt'},
-        {value: 'presents', text: 'Geschenke'},
-        {value: 'sells', text: 'Verkäufe'},
-        {value: 'tax-return', text: 'Steuerrückerstattung'}
+        {value: 'Gehalt', text: 'Gehalt'},
+        {value: 'Geschenke', text: 'Geschenke'},
+        {value: 'Verkäufe', text: 'Verkäufe'},
+        {value: 'Steuerrückerstattung', text: 'Steuerrückerstattung'}
     ],
     savings: [
-        {value: 'emergency-fund', text: 'Notgroschen'},
-        {value: 'fun-fund', text: 'Spaßkonto'},
-        {value: 'stock-market', text: 'Aktien & ETFs'},
-        {value: 'crypto', text: 'Krypto'},
-        {value: 'gold', text: 'Gold'}
+        {value: 'Notgroschen', text: 'Notgroschen'},
+        {value: 'Spaßkonto', text: 'Spaßkonto'},
+        {value: 'Aktien & ETFs', text: 'Aktien & ETFs'},
+        {value: 'Krypto', text: 'Krypto'},
+        {value: 'Gold', text: 'Gold'}
     ],
     spendings: [
-        {value: 'mobility', text: 'Mobilität'},
-        {value: 'home-entertainment', text: 'Heimunterhaltung'},
-        {value: 'going-out', text: 'Ausgehen'},
-        {value: 'sport-activities', text: 'Sportaktivitäten'},
-        {value: 'real-estate', text: 'Wohnen'},
-        {value: 'insurance', text: 'Versicherungen'},
-        {value: 'cost-of-living', text: 'Lebenshaltung'},
-        {value: 'telecommunication', text: 'Telekommunikation'},
-        {value: 'media-subscription', text: 'Medienabos'},
-        {value: 'philanthropy', text: 'Philantropie'},
-        {value: 'financial-cost', text: 'Finanzkosten'},
-        {value: 'vacation', text: 'KUrlaubrypto'},
-        {value: 'education', text: 'Bildung'},
-        {value: 'emigration', text: 'Auswanderung'},
-        {value: 'other', text: 'Sonstiges'}
+        {value: 'Mobilität', text: 'Mobilität'},
+        {value: 'Heimunterhaltung', text: 'Heimunterhaltung'},
+        {value: 'Ausgehen', text: 'Ausgehen'},
+        {value: 'Sportaktivitäten', text: 'Sportaktivitäten'},
+        {value: 'Wohnen', text: 'Wohnen'},
+        {value: 'Versicherungen', text: 'Versicherungen'},
+        {value: 'Lebenshaltung', text: 'Lebenshaltung'},
+        {value: 'Telekommunikation', text: 'Telekommunikation'},
+        {value: 'Medienabos', text: 'Medienabos'},
+        {value: 'Philantropie', text: 'Philantropie'},
+        {value: 'Finanzkosten', text: 'Finanzkosten'},
+        {value: 'Urlaub', text: 'Urlaub'},
+        {value: 'Bildung', text: 'Bildung'},
+        {value: 'Auswanderung', text: 'Auswanderung'},
+        {value: 'Sonstiges', text: 'Sonstiges'}
     ]
 };
 
