@@ -30,7 +30,6 @@ let db = new sqlite3.Database(dbPath, (err) => {
             console.log("Table Spendings created or already existing");
         });
     });
-
 });
 
 app.use(express.static('Frontend'));
