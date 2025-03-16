@@ -3,8 +3,8 @@ function loadAvailableIncome() {
         .then(response => response.json())
         .then(data => {
             console.log("Verfügbare Einnahmen:", data);
-            const absoluteFormatted = Number(data.absolute).toFixed(2) + '€';
-            const relativeFormatted = '(' + Number(data.relative).toFixed(2) + '%)';
+            const absoluteFormatted = Number(data.absolute).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
+            const relativeFormatted = '(' + Number(data.relative).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%)';
             document.getElementById('absoluteIncome').textContent = absoluteFormatted;
             document.getElementById('relativeIncome').textContent = relativeFormatted;
         })
