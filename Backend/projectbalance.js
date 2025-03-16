@@ -33,7 +33,41 @@ let db = new sqlite3.Database(dbPath, (err) => {
 });
 
 app.use(express.static('Frontend'));
-app.use(express.json())
+app.use(express.json());
+
+app.post('/newTransaction', (req, res) => {
+    const { transactionType, transactionName, transactionDate, transactionValue, transactionCategory } = req.body;
+    if (transactionType === 'income') {
+        const sql = `INSERT INTO Income (Transaction_Name, Transaction_Value, Transaction_Date) VALUES (?, ?, ?)`;
+        db.run(sql, [transactionName, transactionValue, transactionDate], function(err) {
+            if (err) {
+                console.error("Error inserting Income: ", err.message);
+                return res.status(500).json({error: err.message});
+            }
+            res.json({ message: "Income transaction inserted", id: this.lastID });
+        });
+    } else if (transactionType === 'savings') {
+        const sql = `INSERT INTO Savings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date) VALUES (?, ?, ?, ?)`;
+        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate], function(err) {
+            if (err) {
+                console.error("Error inserting Savings:", err.message);
+                return res.status(500).json({ error: err.message });
+            }
+            res.json({ message: "Savings transaction inserted", id: this.lastID });
+        });
+    } else if (transactionType === 'spendings') {
+        const sql = `INSERT INTO Spendings (Transaction_Name, Transaction_Value, Transaction_Date) VALUES (?, ?, ?)`;
+        db.run(sql, [transactionName, transactionValue, transactionDate], function(err) {
+            if (err) {
+                console.error("Error inserting Spendings:", err.message);
+                return res.status(500).json({ error: err.message });
+            }
+            res.json({ message: "Spendings transaction inserted", id: this.lastID });
+        });
+    } else {
+        res.status(400).json({ error: "Invalid transaction type" });
+    }
+});
 
 app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");
