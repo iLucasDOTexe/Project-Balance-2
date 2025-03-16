@@ -10,7 +10,7 @@ function loadTransactions() {
                 <td>${tx.date}</td>
                 <td>${tx.name}</td>
                 <td>${tx.category}</td>
-                <td>${tx.value > 0 ? '+' : ''}${tx.value}€</td>
+                <td>${tx.value}€</td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton_${index}" data-bs-toggle="dropdown" aria-expanded="false"></button>
