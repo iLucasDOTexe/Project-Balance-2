@@ -81,10 +81,10 @@ function sendFormData(event) {
     const transactionName = document.getElementById('inputTitle').value;
     const transactionDate = document.getElementById('inputDate').value;
     const rawValue = parseFloat(document.getElementById('inputAmount').value);
+    const normalizedValue = String(rawValue).replace(',', '.');
+    const transactionValue = parseFloat(normalizedValue);
     const transactionCategory = form.categorySelection.value; // Kann bei "income" deaktiviert sein
     //const taxation = document.getElementById('taxationCheck').checked ? 1 : 0;
-    const normalizedValue = rawValue.replace(',', '.');
-    const transactionValue = parseFloat(normalizedValue);
   
     // Daten-Objekt zusammenstellen
     const data = {
