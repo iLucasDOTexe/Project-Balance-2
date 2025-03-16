@@ -1,5 +1,6 @@
 const ModalForm = document.forms.ModalForm;
 const checkbox = document.getElementById('taxationCheck')
+const inputTitle = document.getElementById('inputTitle');
 const categories = {
     income: [
         {value: 'Gehalt', text: 'Gehalt'},
@@ -40,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     transactionSelect.addEventListener('change', e => {
         let selectedType = e.target.value;
+        if (selectedType === 'income') {
+            inputTitle.disabled = true;
+            inputTitle.value = '';
+        } else {
+            inputTitle.disabled = false;
+        }
         categorySelect.innerHTML = '';
         if (categories[selectedType] && categories[selectedType].length > 0) {
             categories[selectedType].forEach(cat => {
