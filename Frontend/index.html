@@ -130,7 +130,7 @@
                 </div>
                 <!--Start Modal Form-->
                 <div class="modal-body">
-                  <form id="ModalForm">
+                  <form id="ModalForm" name="ModalForm">
                     <div class="mt-3">
                       <label for="transactionSelection" class="form-label mb-0">Transaktionsart</label>
                       <select class="form-select" id="transactionSelection" aria-label="Transaction selection">
@@ -145,25 +145,7 @@
                     </div>
                     <div class="mt-3">
                       <label for="categorySelection" class="form-label mb-0">Kategorie</label>
-                      <select class="form-select" id="categorySelection" aria-label="Category selection" disabled>
-                        <option value="income">Einnahmen</option>
-                        <option value="mobility">Mobilität</option>
-                        <option value="home-entertainment">Heimunterhaltung</option>
-                        <option value="going-out">Ausgehen</option>
-                        <option value="sport-activities">Sportaktivitäten</option>
-                        <option value="real-estate">Wohnen</option>
-                        <option value="insurance">Versicherungen</option>
-                        <option value="cost-of-living">Lebenshaltungskosten</option>
-                        <option value="investing">Investments</option>
-                        <option value="telecommunication">Telekommunikation</option>
-                        <option value="media-subscription">Medienabos</option>
-                        <option value="philanthropy">Philantropie</option>
-                        <option value="financial-cost">Finanzkosten</option>
-                        <option value="vacation">Urlaub</option>
-                        <option value="education">Bildung</option>
-                        <option value="emigration">Auswanderung</option>
-                        <option value="other">Sonstiges</option>
-                      </select>
+                      <select class="form-select" id="categorySelection" aria-label="Category selection"></select>
                     </div>
                     <div class="mt-3">
                       <label for="inputDate" class="form-label mb-0">Datum</label>
@@ -334,6 +316,7 @@
       <script src="./src/spendings_doughnut.js"></script>
       <script src="./src/savings_doughnut.js"></script>
       <script src="./src/balance_bar.js"></script>
+      <script src="./src/modal_form.js"></script>
       <!--End Scripts-->
     </body>
 </html>

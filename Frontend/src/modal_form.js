@@ -1,9 +1,68 @@
 const ModalForm = document.forms.ModalForm;
 const checkbox = document.getElementById('taxationCheck')
+const categories = {
+    income: [
+        {value: 'salary', text: 'Gehalt'},
+        {value: 'presents', text: 'Geschenke'},
+        {value: 'sells', text: 'Verkäufe'},
+        {value: 'tax-return', text: 'Steuerrückerstattung'}
+    ],
+    savings: [
+        {value: 'emergency-fund', text: 'Notgroschen'},
+        {value: 'fun-fund', text: 'Spaßkonto'},
+        {value: 'stock-market', text: 'Aktien & ETFs'},
+        {value: 'crypto', text: 'Krypto'},
+        {value: 'gold', text: 'Gold'}
+    ],
+    spendings: [
+        {value: 'mobility', text: 'Mobilität'},
+        {value: 'home-entertainment', text: 'Heimunterhaltung'},
+        {value: 'going-out', text: 'Ausgehen'},
+        {value: 'sport-activities', text: 'Sportaktivitäten'},
+        {value: 'real-estate', text: 'Wohnen'},
+        {value: 'insurance', text: 'Versicherungen'},
+        {value: 'cost-of-living', text: 'Lebenshaltung'},
+        {value: 'telecommunication', text: 'Telekommunikation'},
+        {value: 'media-subscription', text: 'Medienabos'},
+        {value: 'philanthropy', text: 'Philantropie'},
+        {value: 'financial-cost', text: 'Finanzkosten'},
+        {value: 'vacation', text: 'KUrlaubrypto'},
+        {value: 'education', text: 'Bildung'},
+        {value: 'emigration', text: 'Auswanderung'},
+        {value: 'other', text: 'Sonstiges'}
+    ]
+};
 
-ModalForm.transactionSelection.addEventListener('change', e => {
-    let form = e.target.form;
-    form.categorySelection.disabled = (e.target.value == 'income');
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM vollständig geladen – modal_form.js wird ausgeführt");//
+    const modalForm = document.forms.ModalForm;
+    console.log("ModalForm:", modalForm);
+    if (!modalForm) {
+        console.error("ModalForm wurde nicht gefunden. Bitte prüfen Sie das name-Attribut im Formular.");//
+    }
+    const transactionSelect = modalForm.transactionSelection;
+    const categorySelect = modalForm.categorySelection;
+    console.log("Transaction Select:", transactionSelect, "Category Select:", categorySelect);//
+
+    transactionSelect.addEventListener('change', e => {
+        let selectedType = e.target.value;
+        console.log("Transaktionstyp geändert:", selectedType);//
+        categorySelect.innerHTML = '';
+        if (categories[selectedType] && categories[selectedType].length > 0) {
+            categories[selectedType].forEach(cat => {
+                console.log("Füge Kategorie hinzu:", cat);//
+                const option = document.createElement('option');
+                option.value = cat.value;
+                option.textContent = cat.text;
+                categorySelect.appendChild(option);
+            });
+            categorySelect.disabled = false;
+        } else {
+            categorySelect.disabled = true;
+        }
+    });
+    const event = new Event('change');
+    transactionSelect.dispatchEvent(event);
 });
 
 checkbox.addEventListener('change', e => {
