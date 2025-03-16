@@ -5,7 +5,7 @@ function loadTransactions() {
         const tbody = document.querySelector('table tbody');
         tbody.innerHTML = '';
         data.transactions.forEach((tx, index) => {
-            const valueFormatted = Number(tx.value).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '€';
+            const valueFormatted = Number(tx.value).toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${tx.date}</td>
