@@ -11,19 +11,19 @@ let db = new sqlite3.Database(dbPath, (err) => {
     console.log("Database connected");
 
     db.serialize(() => {
-        db.run('CREATE TABLE IF NOT EXISTS Income (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
+        db.run('CREATE TABLE IF NOT EXISTS Income (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
             if (err) {
                 return console.error("Error during creation of Income Table: ", err.message);
             }
             console.log("Table Income created or already existing");
         });
-        db.run('CREATE TABLE IF NOT EXISTS Savings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
+        db.run('CREATE TABLE IF NOT EXISTS Savings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
             if (err) {
                 return console.error("Error during creation of Savings Table: ", err.message);
             }
             console.log("Table Savings created or already existing");
         });
-        db.run('CREATE TABLE IF NOT EXISTS Spendings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
+        db.run('CREATE TABLE IF NOT EXISTS Spendings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
             if (err) {
                 return console.error("Error during creation of Spendings Table: ", err.message);
             }
@@ -70,7 +70,7 @@ app.post('/newTransaction', (req, res) => {
 });
 
 app.get('/transactionTable', (req, res) => {
-    const sql = 'SELECT Transaction_Date AS date, Transaction_Name AS name, \'Einnahmen\' AS category, Transaction_Value AS value FROM Income UNION ALL SELECT Transaction_Date, Transaction_Name, Transaction_Category, Transaction_Value FROM Savings UNION ALL SELECT Transaction_Date, Transaction_Name, \'Ausgaben\' AS category, Transaction_Value FROM Spendings ORDER BY date DESC';
+    const sql = 'SELECT Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value FROM Income UNION ALL SELECT Transaction_Date, Transaction_Name, Transaction_Category, Transaction_Value FROM Savings UNION ALL SELECT Transaction_Date, Transaction_Name, Transaction_Category AS category, Transaction_Value FROM Spendings ORDER BY date DESC';
     db.all(sql, [], (err, rows) => {
         if (err) {
             console.error("Error while calling transactions: ", err.message);
