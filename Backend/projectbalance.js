@@ -70,7 +70,13 @@ app.post('/newTransaction', (req, res) => {
 });
 
 app.get('/transactionTable', (req, res) => {
-    const sql = 'SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value FROM Income UNION ALL SELECT Transaction_Number AS id, Transaction_Date, Transaction_Name, Transaction_Category, Transaction_Value FROM Savings UNION ALL SELECT Transaction_Number AS id, Transaction_Date, Transaction_Name, Transaction_Category AS category, Transaction_Value FROM Spendings ORDER BY date DESC';
+    const sql = `
+        SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'income' AS transactionType FROM Income 
+        UNION ALL 
+        SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'savings' AS transactionType FROM Savings 
+        UNION ALL 
+        SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'spendings' AS transactionType FROM Spendings 
+        ORDER BY date DESC`;
     db.all(sql, [], (err, rows) => {
         if (err) {
             console.error("Error while calling transactions: ", err.message);
