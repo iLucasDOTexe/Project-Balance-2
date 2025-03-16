@@ -80,6 +80,27 @@ app.get('/transactionTable', (req, res) => {
     });
 });
 
+app.delete('/deleteTransaction', (req, res) => {
+    const { id, transactionType } = req.body;
+    let sql;
+    if (transactionType === 'income') {
+        sql = "DELETE FROM Income WHERE Transaction_Number = ?";
+    } else if (transactionType === 'savings') {
+        sql = "DELETE FROM Savings WHERE Transaction_Number = ?";
+    } else if (transactionType === 'spendings') {
+        sql = "DELETE FROM Spendings WHERE Transaction_Number = ?";
+    } else {
+        return res.status(400).json({ error: "Invalid transaction type" });
+    }
+    db.run(sql, [id], function(err) {
+        if (err) {
+            console.error("Error deleting transaction: ", err.message);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: "Transaction deleted", id });
+    });
+});
+
 app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");
 })
