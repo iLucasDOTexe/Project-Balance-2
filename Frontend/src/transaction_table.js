@@ -5,12 +5,13 @@ function loadTransactions() {
         const tbody = document.querySelector('table tbody');
         tbody.innerHTML = '';
         data.transactions.forEach((tx, index) => {
+            const valueFormatted = Number(tx.value).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${tx.date}</td>
                 <td>${tx.name}</td>
                 <td>${tx.category}</td>
-                <td>${tx.value}€</td>
+                <td>${tx.valueFormatted}€</td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton_${index}" data-bs-toggle="dropdown" aria-expanded="false"></button>
