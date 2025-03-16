@@ -4,7 +4,7 @@ function loadTransactions() {
     .then(data => {
         const tbody = document.querySelector('table tbody');
         tbody.innerHTML = '';
-        data.transactions.forEach(tx => {
+        data.transactions.forEach(tx, index => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${tx.date}</td>
