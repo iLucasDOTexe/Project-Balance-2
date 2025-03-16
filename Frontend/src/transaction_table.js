@@ -2,6 +2,7 @@ function loadTransactions() {
     fetch('/transactionTable')
     .then(response => response.json())
     .then(data => {
+        console.log("Empfangene Daten:", data); // Debug-Ausgabe
         const tbody = document.querySelector('table tbody');
         tbody.innerHTML = '';
         data.transactions.forEach((tx, index) => {
