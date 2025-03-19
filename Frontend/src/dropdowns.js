@@ -1,19 +1,26 @@
-// Für das Jahr-Dropdown
-document.querySelectorAll('#dropdownMenuButtonJahr + .dropdown-menu .dropdown-item')
-  .forEach(item => {
-    item.addEventListener('click', function() {
-      const yearButton = document.getElementById('dropdownMenuButtonJahr');
-      yearButton.innerText = this.textContent.trim();
-      loadTransactions(); // Optional: Tabelle aktualisieren, wenn sich der Wert ändert
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    // Jahr-Dropdown: Event Delegation direkt am <ul>
+    const yearDropdown = document.querySelector('#dropdownMenuButtonJahr').nextElementSibling;
+    if (yearDropdown) {
+      yearDropdown.addEventListener('click', function(e) {
+        if (e.target.classList.contains('dropdown-item')) {
+          const yearButton = document.getElementById('dropdownMenuButtonJahr');
+          yearButton.innerText = e.target.textContent.trim();
+          loadTransactions();
+        }
+      });
+    }
+  
+    // Zeitraum-Dropdown: Event Delegation direkt am <ul>
+    const periodDropdown = document.querySelector('#dropdownMenuButtonZeitraum').nextElementSibling;
+    if (periodDropdown) {
+      periodDropdown.addEventListener('click', function(e) {
+        if (e.target.classList.contains('dropdown-item')) {
+          const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
+          periodButton.innerText = e.target.textContent.trim();
+          loadTransactions();
+        }
+      });
+    }
   });
-
-// Für das Zeitraum-Dropdown
-document.querySelectorAll('#dropdownMenuButtonZeitraum + .dropdown-menu .dropdown-item')
-  .forEach(item => {
-    item.addEventListener('click', function() {
-      const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
-      periodButton.innerText = this.textContent.trim();
-      loadTransactions(); // Optional: Tabelle aktualisieren, wenn sich der Wert ändert
-    });
-  });
+  
