@@ -64,5 +64,5 @@ document.addEventListener('DOMContentLoaded', function() {
             </ul>
         `;
     })
-    s.catch(error => console.error('Error loading spendings data:', error));
+    .catch(error => console.error('Error loading spendings data:', error));
 });
