@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Hole die Daten von unserem API-Endpunkt
-  fetch('/incomeData')
+  fetch('/incomeDoughnut')
     .then(response => response.json())
     .then(result => {
-      // Beispiel: Falls du feste Hintergrundfarben für bestimmte Kategorien verwenden möchtest,
-      // kannst du hier die Reihenfolge festlegen. Ansonsten werden die Farben in der Reihenfolge des API-Ergebnisses übernommen.
       const backgroundColors = [
         'rgb(5, 46, 22)',
         'rgb(20, 83, 45)',
@@ -14,15 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
         'rgb(34, 197, 94)'
       ];
       
-      // Erstelle den Doughnut-Chart mit den dynamisch geladenen Daten
       const ctx = document.getElementById('income_doughnut').getContext('2d');
       const myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: result.labels, // Dynamische Labels aus der DB
+          labels: result.labels,
           datasets: [{
             label: 'Statistik',
-            data: result.data,   // Dynamische Daten aus der DB
+            data: result.data,
             backgroundColor: backgroundColors,
           }]
         },
@@ -31,13 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              display: false  // Standardlegende ausblenden
+              display: false
             }
           }
         }
       });
       
-      // Eigene Legende erstellen
       const legendContainer = document.getElementById('income_doughnut_legend');
       const dataValues = myDoughnutChart.data.datasets[0].data;
       const total = dataValues.reduce((acc, val) => acc + val, 0);

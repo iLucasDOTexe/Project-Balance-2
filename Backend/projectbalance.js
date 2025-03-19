@@ -217,7 +217,7 @@ app.get('/balanceBar', (req, res) => {
     );
 });
 
-app.get('/incomeData', (req, res) => {
+app.get('/incomeDoughnut', (req, res) => {
     const sql = `
       SELECT Transaction_Category AS category, SUM(Transaction_Value) AS total 
       FROM Income 
