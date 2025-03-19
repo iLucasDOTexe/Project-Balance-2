@@ -174,7 +174,7 @@ app.get('/savingsQuote', (req, res) => {
     });
 });
 
-app.get('/monthlyData', (req, res) => {
+app.get('/balanceBar', (req, res) => {
     const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
     let incomeData = new Array(12).fill(0);
     let expensesData = new Array(12).fill(0);
@@ -216,7 +216,6 @@ app.get('/monthlyData', (req, res) => {
       }
     );
 });
-
 
 app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Hole zuerst die Daten vom neuen API-Endpunkt
-  fetch('/monthlyData')
+  fetch('/balanceBar')
     .then(response => response.json())
     .then(data => {
       const ctx = document.getElementById('balance_bar').getContext('2d');
