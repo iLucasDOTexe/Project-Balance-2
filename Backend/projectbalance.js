@@ -70,21 +70,47 @@ app.post('/newTransaction', (req, res) => {
 });
 
 app.get('/transactionTable', (req, res) => {
+    const year = req.query.year;
+    const month = req.query.month; // undefined, wenn "Ganzes Jahr" ausgewählt wurde
+  
+    // Baue die WHERE-Bedingung basierend auf den Parametern
+    let whereClause = '';
+    let params = [];
+  
+    if (year) {
+      whereClause = "WHERE strftime('%Y', Transaction_Date) = ?";
+      params.push(year);
+      if (month) {
+        whereClause += " AND strftime('%m', Transaction_Date) = ?";
+        params.push(month);
+      }
+    }
+  
+    // Da du drei Tabellen per UNION zusammenführst, muss die WHERE-Klausel für jede Tabelle angewendet werden
     const sql = `
-        SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'income' AS transactionType FROM Income 
-        UNION ALL 
-        SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'savings' AS transactionType FROM Savings 
-        UNION ALL 
-        SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'spendings' AS transactionType FROM Spendings 
-        ORDER BY date DESC`;
-    db.all(sql, [], (err, rows) => {
-        if (err) {
-            console.error("Error while calling transactions: ", err.message);
-            return res.status(500).json({error: err.message});
-        }
-        res.json({transactions: rows});
+      SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'income' AS transactionType 
+      FROM Income ${whereClause}
+      UNION ALL 
+      SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'savings' AS transactionType 
+      FROM Savings ${whereClause}
+      UNION ALL 
+      SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'spendings' AS transactionType 
+      FROM Spendings ${whereClause}
+      ORDER BY date DESC
+    `;
+  
+    // Wiederhole die Parameter für jede der drei Abfragen
+    const unionParams = [...params, ...params, ...params];
+  
+    db.all(sql, unionParams, (err, rows) => {
+      if (err) {
+        console.error("Error while calling transactions: ", err.message);
+        return res.status(500).json({ error: err.message });
+      }
+      res.json({ transactions: rows });
     });
-});
+  });
+  
 
 app.delete('/deleteTransaction', (req, res) => {
     const { id, transactionType } = req.body;
