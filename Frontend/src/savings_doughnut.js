@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Hole die Savings-Daten vom API-Endpunkt
   fetch('/savingsDoughnut')
     .then(response => response.json())
     .then(result => {
@@ -10,16 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
         'rgb(96, 165, 250)',
         'rgb(191, 219, 254)',
       ];
-
-      // Erstelle den Doughnut-Chart
       const ctx = document.getElementById('savings_doughnut').getContext('2d');
       const myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: result.labels, // Dynamische Labels aus der DB
+          labels: result.labels,
           datasets: [{
             label: 'Statistik',
-            data: result.data,   // Dynamische Daten aus der DB
+            data: result.data,
             backgroundColor: backgroundColors,
           }]
         },
@@ -28,17 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              display: false  // Standardlegende ausblenden
+              display: false
             }
           }
         }
       });
-
-      // Benutzerdefinierte Legende erstellen
       const legendContainer = document.getElementById('savings_doughnut_legend');
       const dataValues = myDoughnutChart.data.datasets[0].data;
       const total = dataValues.reduce((acc, val) => acc + val, 0);
-
       const legendItems = myDoughnutChart.data.labels.map((label, index) => {
         const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
         const value = dataValues[index];
