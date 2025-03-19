@@ -179,63 +179,77 @@ app.get('/balanceBar', (req, res) => {
     let incomeData = new Array(12).fill(0);
     let expensesData = new Array(12).fill(0);
     let savingsData = new Array(12).fill(0);
-    db.all(
-      "SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Income GROUP BY month",
-      (err, incomeRows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        incomeRows.forEach(row => {
-          let monthIndex = parseInt(row.month, 10) - 1;
-          incomeData[monthIndex] = row.total;
-        });
-        db.all(
-          "SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Spendings GROUP BY month",
-          (err, expenseRows) => {
+    db.all("SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Income GROUP BY month", (err, incomeRows) => {
             if (err) return res.status(500).json({ error: err.message });
-            expenseRows.forEach(row => {
-              let monthIndex = parseInt(row.month, 10) - 1;
-              expensesData[monthIndex] = row.total;
-            });
-            db.all(
-              "SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Savings GROUP BY month",
-              (err, savingsRows) => {
-                if (err) return res.status(500).json({ error: err.message });
-                savingsRows.forEach(row => {
-                  let monthIndex = parseInt(row.month, 10) - 1;
-                  savingsData[monthIndex] = row.total;
+            incomeRows.forEach(row => {
+                let monthIndex = parseInt(row.month, 10) - 1;
+                incomeData[monthIndex] = row.total;
                 });
-                res.json({
-                  labels,
-                  income: incomeData,
-                  expenses: expensesData,
-                  savings: savingsData
-                });
-              }
-            );
-          }
+                db.all("SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Spendings GROUP BY month", (err, expenseRows) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    expenseRows.forEach(row => {
+                        let monthIndex = parseInt(row.month, 10) - 1;
+                        expensesData[monthIndex] = row.total;
+                    });
+                    db.all("SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Savings GROUP BY month", (err, savingsRows) => {
+                        if (err) return res.status(500).json({ error: err.message });
+                        savingsRows.forEach(row => {
+                            let monthIndex = parseInt(row.month, 10) - 1;
+                            savingsData[monthIndex] = row.total;
+                        });
+                        res.json({
+                            labels,
+                            income: incomeData,
+                            expenses: expensesData,
+                            savings: savingsData
+                        });
+                    }
+                );
+            }
         );
-      }
-    );
+    });
 });
 
 app.get('/incomeDoughnut', (req, res) => {
     const sql = `
-      SELECT Transaction_Category AS category, SUM(Transaction_Value) AS total 
-      FROM Income 
-      GROUP BY Transaction_Category
+        SELECT Transaction_Category AS category, SUM(Transaction_Value) AS total 
+        FROM Income 
+        GROUP BY Transaction_Category
     `;
     db.all(sql, (err, rows) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
-      const labels = [];
-      const data = [];
-      rows.forEach(row => {
-        labels.push(row.category);
-        data.push(row.total);
-      });
-      res.json({ labels, data });
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        const labels = [];
+        const data = [];
+        rows.forEach(row => {
+            labels.push(row.category);
+            data.push(row.total);
+        });
+        res.json({ labels, data });
     });
-  });
+});
+  
+app.get('/spendingsDoughnut', (req, res) => {
+    const sql = `
+        SELECT Transaction_Category AS category,
+        SUM(Transaction_Value) AS total
+        FROM Spendings
+        GROUP BY Transaction_Category
+    `;
+    db.all(sql, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        const labels = [];
+        const data = [];
+        rows.forEach(row => {
+            labels.push(row.category);
+            data.push(row.total);
+        });
+        res.json({ labels, data });
+    });
+});
   
 
 app.listen(4444, '0.0.0.0', () => {
