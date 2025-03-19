@@ -217,6 +217,27 @@ app.get('/balanceBar', (req, res) => {
     );
 });
 
+app.get('/incomeData', (req, res) => {
+    const sql = `
+      SELECT Transaction_Category AS category, SUM(Transaction_Value) AS total 
+      FROM Income 
+      GROUP BY Transaction_Category
+    `;
+    db.all(sql, (err, rows) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      const labels = [];
+      const data = [];
+      rows.forEach(row => {
+        labels.push(row.category);
+        data.push(row.total);
+      });
+      res.json({ labels, data });
+    });
+  });
+  
+
 app.listen(4444, '0.0.0.0', () => {
     console.log("App listening on port 4444");
 })
