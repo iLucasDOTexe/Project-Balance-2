@@ -174,25 +174,19 @@ app.get('/savingsQuote', (req, res) => {
     });
 });
 
-// Beispiel für einen neuen API-Endpunkt, der die aggregierten Monatswerte zurückgibt
 app.get('/monthlyData', (req, res) => {
     const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-    // Arrays mit 12 Plätzen initialisieren, einen Wert pro Monat
     let incomeData = new Array(12).fill(0);
     let expensesData = new Array(12).fill(0);
     let savingsData = new Array(12).fill(0);
-    
-    // Income aggregieren
     db.all(
       "SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Income GROUP BY month",
       (err, incomeRows) => {
         if (err) return res.status(500).json({ error: err.message });
         incomeRows.forEach(row => {
-          // Umwandeln der Monatszahl in einen Index (0 für Jan, 11 für Dez)
           let monthIndex = parseInt(row.month, 10) - 1;
           incomeData[monthIndex] = row.total;
         });
-        // Expenses aggregieren
         db.all(
           "SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Spendings GROUP BY month",
           (err, expenseRows) => {
@@ -201,7 +195,6 @@ app.get('/monthlyData', (req, res) => {
               let monthIndex = parseInt(row.month, 10) - 1;
               expensesData[monthIndex] = row.total;
             });
-            // Savings aggregieren
             db.all(
               "SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Savings GROUP BY month",
               (err, savingsRows) => {
@@ -210,7 +203,6 @@ app.get('/monthlyData', (req, res) => {
                   let monthIndex = parseInt(row.month, 10) - 1;
                   savingsData[monthIndex] = row.total;
                 });
-                // Alle Daten zusammen zurücksenden
                 res.json({
                   labels,
                   income: incomeData,
