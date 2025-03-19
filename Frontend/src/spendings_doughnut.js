@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('/spendingsData')
+  fetch('/spendingsDoughnut')
     .then(response => response.json())
     .then(result => {
         const backgroundColors = [
