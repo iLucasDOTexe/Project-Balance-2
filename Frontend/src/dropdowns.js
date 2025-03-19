@@ -1,22 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Jahr-Dropdown: Event Delegation direkt am <ul>
-    const yearDropdown = document.querySelector('#dropdownMenuButtonJahr').nextElementSibling;
+    // Jahr-Dropdown
+    const yearButton = document.getElementById('dropdownMenuButtonJahr');
+    const yearDropdown = yearButton.parentElement.querySelector('.dropdown-menu');
     if (yearDropdown) {
       yearDropdown.addEventListener('click', function(e) {
         if (e.target.classList.contains('dropdown-item')) {
-          const yearButton = document.getElementById('dropdownMenuButtonJahr');
+          console.log("Jahr ausgewählt:", e.target.textContent.trim());
           yearButton.innerText = e.target.textContent.trim();
           loadTransactions();
         }
       });
     }
-  
-    // Zeitraum-Dropdown: Event Delegation direkt am <ul>
-    const periodDropdown = document.querySelector('#dropdownMenuButtonZeitraum').nextElementSibling;
+    
+    // Zeitraum-Dropdown
+    const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
+    const periodDropdown = periodButton.parentElement.querySelector('.dropdown-menu');
     if (periodDropdown) {
       periodDropdown.addEventListener('click', function(e) {
         if (e.target.classList.contains('dropdown-item')) {
-          const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
+          console.log("Zeitraum ausgewählt:", e.target.textContent.trim());
           periodButton.innerText = e.target.textContent.trim();
           loadTransactions();
         }
