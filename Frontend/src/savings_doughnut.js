@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Hole die Savings-Daten vom API-Endpunkt
-  fetch('/savingsData')
+  fetch('/savingsDoughnut')
     .then(response => response.json())
     .then(result => {
-      // Feste Hintergrundfarben, die den Kategorien zugeordnet werden sollen.
-      // Die Reihenfolge kann bei Bedarf angepasst werden.
       const backgroundColors = [
         'rgb(23, 37, 84)',
         'rgb(30, 64, 175)',
