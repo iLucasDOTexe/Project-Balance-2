@@ -39,33 +39,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-
-      const legendContainer = document.getElementById('spendings_doughnut_legend');
-      const dataValues = myDoughnutChart.data.datasets[0].data;
-      const total = dataValues.reduce((acc, val) => acc + val, 0);
-
-      const legendItems = myDoughnutChart.data.labels.map((label, index) => {
-        const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
-        const value = dataValues[index];
-        return `
-          <li class="d-flex align-items-center mb-2">
-            <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
-            <span class="me-auto">${label}</span>
-            <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-          </li>
+        const legendContainer = document.getElementById('spendings_doughnut_legend');
+        const dataValues = myDoughnutChart.data.datasets[0].data;
+        const total = dataValues.reduce((acc, val) => acc + val, 0);
+        const legendItems = myDoughnutChart.data.labels.map((label, index) => {
+            const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
+            const value = dataValues[index];
+            return `
+                <li class="d-flex align-items-center mb-2">
+                    <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
+                    <span class="me-auto">${label}</span>
+                    <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </li>
+            `;
+        });
+        legendContainer.innerHTML = `
+            <ul class="list-unstyled m-0">
+                ${legendItems.join('')}
+                <hr class="my-2" />
+                <li class="d-flex fw-bold">
+                    <span class="me-auto">Total</span>
+                    <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </li>
+            </ul>
         `;
-      });
-
-      legendContainer.innerHTML = `
-        <ul class="list-unstyled m-0">
-          ${legendItems.join('')}
-          <hr class="my-2" />
-          <li class="d-flex fw-bold">
-            <span class="me-auto">Total</span>
-            <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-          </li>
-        </ul>
-      `;
     })
-    .catch(error => console.error('Error loading spendings data:', error));
+    s.catch(error => console.error('Error loading spendings data:', error));
 });
