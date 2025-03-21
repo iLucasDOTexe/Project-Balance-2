@@ -134,56 +134,31 @@ app.delete('/deleteTransaction', (req, res) => {
 });
 
 app.get('/availableIncome', (req, res) => {
-    const year = req.query.year;
-    const month = req.query.month; // Optional: nur vorhanden, wenn ein bestimmter Monat ausgewählt wurde
-  
-    let whereClause = "";
-    let params = [];
-  
-    if (year) {
-      whereClause = "WHERE strftime('%Y', Transaction_Date) = ?";
-      params.push(year);
-      if (month) {
-        whereClause += " AND strftime('%m', Transaction_Date) = ?";
-        params.push(month);
-      }
-    }
-  
-    // Abfrage für Income
-    const incomeQuery = `SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income ${whereClause}`;
-    db.get(incomeQuery, params, (err, incomeRow) => {
-      if (err) {
-        console.error("Error calculating income sum: ", err.message);
-        return res.status(500).json({ error: err.message });
-      }
-      const incomeSum = incomeRow.incomeSum;
-  
-      // Abfrage für Spendings
-      const spendingsQuery = `SELECT IFNULL(SUM(Transaction_Value), 0) AS spendingsSum FROM Spendings ${whereClause}`;
-      db.get(spendingsQuery, params, (err, spendingRow) => {
+    db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income", (err, incomeRow) => {
         if (err) {
-          console.error("Error calculating spendings sum: ", err.message);
-          return res.status(500).json({ error: err.message });
-        }
-        const spendingsSum = spendingRow.spendingsSum;
-  
-        // Abfrage für Savings
-        const savingsQuery = `SELECT IFNULL(SUM(Transaction_Value), 0) AS savingsSum FROM Savings ${whereClause}`;
-        db.get(savingsQuery, params, (err, savingsRow) => {
-          if (err) {
-            console.error("Error calculating savings sum: ", err.message);
+            console.error("Error calculating income sum: ", err.message);
             return res.status(500).json({ error: err.message });
-          }
-          const savingsSum = savingsRow.savingsSum;
-  
-          const absolute = incomeSum - spendingsSum - savingsSum;
-          const relative = incomeSum ? (absolute / incomeSum) * 100 : 0;
-          res.json({ absolute, relative });
+        }
+        const incomeSum = incomeRow.incomeSum;
+        db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS spendingsSum FROM Spendings", (err, spendingRow) => {
+            if (err) {
+                console.error("Error calculating spendings sum: ", err.message);
+                return res.status(500).json({ error: err.message });
+            }
+            const spendingsSum = spendingRow.spendingsSum;
+            db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS savingsSum FROM Savings", (err, savingsRow) => {
+                if (err) {
+                    console.error("Error calculating savings sum: ", err.message);
+                    return res.status(500).json({ error: err.message });
+                }
+                const savingsSum = savingsRow.savingsSum;
+                const absolute = incomeSum - spendingsSum - savingsSum;
+                const relative = incomeSum ? (absolute / incomeSum) * 100 : 0;
+                res.json({ absolute, relative });
+            });
         });
-      });
     });
-  });
-  
+});
 
 app.get('/spendingsMade', (req, res) => {
     db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income", (err, incomeRow) => {
