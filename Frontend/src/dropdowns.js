@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateBalanceBar();
       loadAvailableIncome();
       loadSpendingsMade();
+      loadSavingsQuote();
     });
   });
 
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateBalanceBar();
       loadAvailableIncome();
       loadSpendingsMade();
+      loadSavingsQuote();
     });
   });
 });
