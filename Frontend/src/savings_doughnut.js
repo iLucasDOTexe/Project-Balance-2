@@ -61,6 +61,15 @@ function updateSavingsDoughnut() {
           plugins: {
             legend: {
               display: false
+            }, 
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = contextg.chart.data.labels[context.dataIndex] || '';
+                  const value = context.parsed;
+                  return label + ': ' + value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+              }
             }
           }
         }
