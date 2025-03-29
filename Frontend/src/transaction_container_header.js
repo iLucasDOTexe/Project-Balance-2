@@ -5,6 +5,6 @@ function updateTransactionsHeading() {
     // Den ausgewählten Zeitraum aus dem data-Attribut abrufen:
     const selectedPeriod = periodButton ? periodButton.getAttribute('data-selected') : '';
     const heading = document.getElementById('transactionContainerHeader');
-    heading.textContent = `Transaktionen - ${selectedYear} [${selectedPeriod}]`;
+    heading.textContent = `Transaktionen - ${selectedPeriod} ${selectedYear}`;
   }
   
