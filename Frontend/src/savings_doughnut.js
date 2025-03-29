@@ -65,7 +65,7 @@ function updateSavingsDoughnut() {
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  const label = contextg.chart.data.labels[context.dataIndex] || '';
+                  const label = context.chart.data.labels[context.dataIndex] || '';
                   const value = context.parsed;
                   return label + ': ' + value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 }
