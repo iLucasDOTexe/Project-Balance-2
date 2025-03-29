@@ -77,7 +77,7 @@ function deleteTransaction(id, transactionType) {
   .then(data => {
     console.log(data.message);
     // Tabelle nach erfolgreicher Löschung neu laden
-    loadTransactions();
+    window.location.reload();
   })
   .catch(error => console.error('Error deleting transaction:', error));
 }
