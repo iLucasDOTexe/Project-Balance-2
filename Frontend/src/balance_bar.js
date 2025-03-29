@@ -69,10 +69,26 @@ function updateBalanceBar() {
             y: { stacked: true }
           },
           plugins: {
-            legend: { display: false }
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                // Entfernt den Titel (x-Achsen-Beschriftung)
+                title: function(context) {
+                  return '';
+                },
+                // Baut das Label als "Kategorie: Wert€" zusammen
+                label: function(context) {
+                  const datasetLabel = context.dataset.label || '';
+                  // Bei vertikaler Darstellung befindet sich der Wert in context.parsed.y
+                  const value = context.parsed.y;
+                  return datasetLabel + ': ' + value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
+                }
+              }
+            }
           }
         }
       });
+      
     })
     .catch(error => console.error('Error loading monthly data:', error));
 }
