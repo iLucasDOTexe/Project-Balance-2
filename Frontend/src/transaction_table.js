@@ -39,10 +39,10 @@ function loadTransactions() {
           });
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td class="text-truncate">${tx.date}</td>
-            <td class="text-truncate">${tx.name}</td>
-            <td class="text-truncate">${tx.category}</td>
-            <td class="text-truncate">${valueFormatted}€</td>
+            <td>${tx.date}</td>
+            <td>${tx.name}</td>
+            <td>${tx.category}</td>
+            <td>${valueFormatted}€</td>
             <td>
               <div class="dropdown">
                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton_${index}" data-bs-toggle="dropdown" aria-expanded="false"></button>
