@@ -1,5 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('/incomeDoughnut')
+  const yearButton = document.getElementById('dropdownMenuButtonJahr');
+  const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
+  const selectedYear = yearButton ? yearButton.innerText.trim() : '';
+  const selectedPeriod = periodButton ? periodButton.innerText.trim() : '';
+
+  let url = `/incomeDoughnut?year=${selectedYear}`;
+  if (selectedPeriod !== 'Ganzes Jahr') {
+    const months = {
+      'Januar': '01',
+      'Februar': '02',
+      'März': '03',
+      'April': '04',
+      'Mai': '05',
+      'Juni': '06',
+      'Juli': '07',
+      'August': '08',
+      'September': '09',
+      'Oktober': '10',
+      'November': '11',
+      'Dezember': '12'
+    };
+    const monthNum = months[selectedPeriod];
+    url += `&month=${monthNum}`;
+  }
+  fetch(url)
     .then(response => response.json())
     .then(result => {
       const backgroundColors = [
