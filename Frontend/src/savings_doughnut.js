@@ -50,7 +50,6 @@ function updateSavingsDoughnut() {
         data: {
           labels: result.labels,
           datasets: [{
-            label: 'Statistik',
             data: result.data,
             backgroundColor: backgroundColors,
           }]
@@ -62,15 +61,7 @@ function updateSavingsDoughnut() {
             legend: {
               display: false
             }, 
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  const label = context.chart.data.labels[context.dataIndex] || '';
-                  const value = context.parsed;
-                  return label + ': ' + value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                }
-              }
-            }
+            
           }
         }
       });
