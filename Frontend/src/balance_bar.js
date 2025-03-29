@@ -10,19 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
           labels: data.labels, // z. B. ['Jan', 'Feb', ... , 'Dez']
           datasets: [
             {
-              label: 'Income',
+              label: 'Einkommen',
               data: data.income, // Aggregierte Werte für Income pro Monat
               backgroundColor: 'rgb(5, 46, 22)', 
               stack: 'Stack 1'
             },
             {
-              label: 'Expenses',
+              label: 'Ausgaben',
               data: data.expenses, // Aggregierte Werte für Expenses pro Monat
               backgroundColor: 'rgb(69, 10, 10)',
               stack: 'Stack 2'
             },
             {
-              label: 'Savings',
+              label: 'Sparen',
               data: data.savings, // Aggregierte Werte für Savings pro Monat
               backgroundColor: 'rgb(23, 37, 84)',
               stack: 'Stack 2'
