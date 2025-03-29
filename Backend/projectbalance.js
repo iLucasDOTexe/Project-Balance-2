@@ -273,26 +273,43 @@ app.get('/incomeDoughnut', (req, res) => {
     });
   });
   
-app.get('/spendingsDoughnut', (req, res) => {
+  app.get('/spendingsDoughnut', (req, res) => {
+    const year = req.query.year;
+    const month = req.query.month;
+    
+    let whereClause = '';
+    let params = [];
+    
+    if (year) {
+      whereClause = "WHERE strftime('%Y', Transaction_Date) = ?";
+      params.push(year);
+      if (month) {
+        whereClause += " AND strftime('%m', Transaction_Date) = ?";
+        params.push(month);
+      }
+    }
+    
     const sql = `
-        SELECT Transaction_Category AS category,
-        SUM(Transaction_Value) AS total
-        FROM Spendings
-        GROUP BY Transaction_Category
+      SELECT Transaction_Category AS category, SUM(Transaction_Value) AS total 
+      FROM Spendings 
+      ${whereClause}
+      GROUP BY Transaction_Category
     `;
-    db.all(sql, (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        const labels = [];
-        const data = [];
-        rows.forEach(row => {
-            labels.push(row.category);
-            data.push(row.total);
-        });
-        res.json({ labels, data });
+    
+    db.all(sql, params, (err, rows) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      const labels = [];
+      const data = [];
+      rows.forEach(row => {
+        labels.push(row.category);
+        data.push(row.total);
+      });
+      res.json({ labels, data });
     });
-});
+  });
+  
 
 app.get('/savingsDoughnut', (req, res) => {
     const sql = `

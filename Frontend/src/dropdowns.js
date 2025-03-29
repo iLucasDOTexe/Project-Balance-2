@@ -1,29 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Jahr-Dropdown: Alle <a>-Elemente auswählen, die zum Jahr-Dropdown gehören
+  // Jahr-Dropdown: Aktualisiere den Button und rufe beide Update-Funktionen auf
   const yearButton = document.getElementById('dropdownMenuButtonJahr');
   const yearDropdownItems = document.querySelectorAll('.dropdown-menu[aria-labelledby="dropdownMenuButtonJahr"] .dropdown-item');
   yearDropdownItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-      console.log("Jahr ausgewählt:", this.textContent.trim());
-      yearButton.innerText = this.textContent.trim();
-      // Für den Jahr-Button kannst du auch ein data-Attribut setzen, falls benötigt:
-      yearButton.setAttribute('data-selected', this.textContent.trim());
-      loadTransactions(); // Tabelle aktualisieren
-      updateIncomeDoughnut(); // Chart aktualisieren
+    item.addEventListener('click', function() {
+      const selectedValue = this.textContent.trim();
+      console.log("Jahr ausgewählt:", selectedValue);
+      yearButton.innerText = selectedValue;
+      yearButton.setAttribute('data-selected', selectedValue);
+      loadTransactions();        // Aktualisiere die Transaktionstabelle
+      updateIncomeDoughnut();      // Aktualisiere den Income-Doughnut
+      updateSpendingsDoughnut();   // Aktualisiere den Spendings-Doughnut
     });
   });
 
-  // Zeitraum-Dropdown: Alle <a>-Elemente auswählen, die zum Zeitraum-Dropdown gehören
+  // Zeitraum-Dropdown: Aktualisiere den Button (mit data-Attribut) und rufe beide Update-Funktionen auf
   const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
   const periodDropdownItems = document.querySelectorAll('.dropdown-menu[aria-labelledby="dropdownMenuButtonZeitraum"] .dropdown-item');
   periodDropdownItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-      console.log("Zeitraum ausgewählt:", this.textContent.trim());
-      periodButton.innerText = this.textContent.trim();
-      // Hier wird der ausgewählte Wert zusätzlich im data-Attribut gespeichert:
-      periodButton.setAttribute('data-selected', this.textContent.trim());
-      loadTransactions(); // Tabelle aktualisieren
-      updateIncomeDoughnut(); // Chart aktualisieren
+    item.addEventListener('click', function() {
+      const selectedValue = this.textContent.trim();
+      console.log("Zeitraum ausgewählt:", selectedValue);
+      periodButton.innerText = selectedValue;
+      periodButton.setAttribute('data-selected', selectedValue);
+      loadTransactions();        // Aktualisiere die Transaktionstabelle
+      updateIncomeDoughnut();      // Aktualisiere den Income-Doughnut
+      updateSpendingsDoughnut();   // Aktualisiere den Spendings-Doughnut
     });
   });
 });
