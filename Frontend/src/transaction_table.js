@@ -62,5 +62,25 @@ function loadTransactions() {
       .catch(error => console.error('Error while loading transactions:', error));
   }
   
-  document.addEventListener('DOMContentLoaded', loadTransactions);
+function deleteTransaction(id, transactionType) {
+  // Optional: Bestätigung abfragen
+  if (!confirm('Soll diese Transaktion wirklich gelöscht werden?')) return;
+  
+  fetch('/deleteTransaction', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id, transactionType })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.message);
+    // Tabelle nach erfolgreicher Löschung neu laden
+    loadTransactions();
+  })
+  .catch(error => console.error('Error deleting transaction:', error));
+}
+
+document.addEventListener('DOMContentLoaded', loadTransactions);
   
