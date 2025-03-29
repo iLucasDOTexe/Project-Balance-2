@@ -91,6 +91,8 @@ function updateIncomeDoughnut() {
       `;
     })
     .catch(error => console.error('Error loading income data:', error));
+    console.log("selectedYear:", selectedYear, "selectedPeriod:", selectedPeriod);
+    console.log("Fetching URL:", url);
 }
 
 // Initialer Aufruf und Event-Listener hinzufügen
