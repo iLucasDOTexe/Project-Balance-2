@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadAvailableIncome();
       loadSpendingsMade();
       loadSavingsQuote();
+      updateTransactionsHeading();
     });
   });
 
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadAvailableIncome();
       loadSpendingsMade();
       loadSavingsQuote();
+      updateTransactionsHeading();
     });
   });
 });
