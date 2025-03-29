@@ -71,16 +71,18 @@ function updateBalanceBar() {
           plugins: {
             legend: { display: false },
             tooltip: {
+              // Ändere den Modus, sodass pro Dataset getrennte Tooltips angezeigt werden
+              mode: 'dataset',
+              intersect: true,
               callbacks: {
-                // Entfernt den Titel (x-Achsen-Beschriftung)
-                title: function(context) {
+                // Entfernt den Titel (normalerweise der x-Achsen-Wert)
+                title: function(tooltipItems) {
                   return '';
                 },
-                // Baut das Label als "Kategorie: Wert€" zusammen
+                // Zeigt nur den Datensatznamen und den formatierten Wert an
                 label: function(context) {
                   const datasetLabel = context.dataset.label || '';
-                  // Bei vertikaler Darstellung befindet sich der Wert in context.parsed.y
-                  const value = context.parsed.y;
+                  const value = context.parsed.y; // für vertikale Balken
                   return datasetLabel + ': ' + value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
                 }
               }
@@ -88,6 +90,7 @@ function updateBalanceBar() {
           }
         }
       });
+      
       
     })
     .catch(error => console.error('Error loading monthly data:', error));
