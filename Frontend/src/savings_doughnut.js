@@ -1,5 +1,34 @@
-document.addEventListener('DOMContentLoaded', function() {
-  fetch('/savingsDoughnut')
+function updateSavingsDoughnut() {
+  const yearButton = document.getElementById('dropdownMenuButtonJahr');
+  const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
+  const selectedYear = yearButton ? yearButton.innerText.trim() : '';
+  // Hier wird der aktuell ausgewählte Zeitraum aus dem data-Attribut gelesen
+  const selectedPeriod = periodButton ? periodButton.getAttribute('data-selected') : '';
+
+  let url = `/savingsDoughnut?year=${selectedYear}`;
+  if (selectedPeriod !== 'Ganzes Jahr') {
+    const months = {
+      'Januar': '01',
+      'Februar': '02',
+      'März': '03',
+      'April': '04',
+      'Mai': '05',
+      'Juni': '06',
+      'Juli': '07',
+      'August': '08',
+      'September': '09',
+      'Oktober': '10',
+      'November': '11',
+      'Dezember': '12'
+    };
+    const monthNum = months[selectedPeriod];
+    url += `&month=${monthNum}`;
+  }
+
+  console.log("selectedYear:", selectedYear, "selectedPeriod:", selectedPeriod);
+  console.log("Fetching URL:", url);
+
+  fetch(url)
     .then(response => response.json())
     .then(result => {
       const backgroundColors = [
@@ -9,8 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
         'rgb(96, 165, 250)',
         'rgb(191, 219, 254)',
       ];
+
+      // Bestehende Chart-Instanz zerstören, falls vorhanden
+      if (window.savingsChart) {
+        window.savingsChart.destroy();
+      }
+      
       const ctx = document.getElementById('savings_doughnut').getContext('2d');
-      const myDoughnutChart = new Chart(ctx, {
+      window.savingsChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
           labels: result.labels,
@@ -30,24 +65,23 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
       });
+      
+      // Legende aktualisieren
       const legendContainer = document.getElementById('savings_doughnut_legend');
-      const dataValues = myDoughnutChart.data.datasets[0].data;
+      const dataValues = window.savingsChart.data.datasets[0].data;
       const total = dataValues.reduce((acc, val) => acc + val, 0);
-      const legendItems = myDoughnutChart.data.labels.map((label, index) => {
-        const bgColor = myDoughnutChart.data.datasets[0].backgroundColor[index];
+      const legendItems = window.savingsChart.data.labels.map((label, index) => {
+        const bgColor = window.savingsChart.data.datasets[0].backgroundColor[index];
         const value = dataValues[index];
         return `
           <li class="d-flex align-items-center mb-2">
-            <!-- Farbkasten -->
             <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
-            <!-- Label -->
             <span class="me-auto">${label}</span>
-            <!-- Wert -->
             <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </li>
         `;
       });
-
+      
       legendContainer.innerHTML = `
         <ul class="list-unstyled m-0">
           ${legendItems.join('')}
@@ -60,4 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
     })
     .catch(error => console.error('Error loading savings data:', error));
+}
+
+// Initialer Aufruf
+document.addEventListener('DOMContentLoaded', function() {
+  updateSavingsDoughnut();
 });

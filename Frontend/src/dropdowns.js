@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Jahr-Dropdown: Aktualisiere den Button und rufe beide Update-Funktionen auf
+  // Jahr-Dropdown
   const yearButton = document.getElementById('dropdownMenuButtonJahr');
   const yearDropdownItems = document.querySelectorAll('.dropdown-menu[aria-labelledby="dropdownMenuButtonJahr"] .dropdown-item');
   yearDropdownItems.forEach(item => {
@@ -8,13 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("Jahr ausgewählt:", selectedValue);
       yearButton.innerText = selectedValue;
       yearButton.setAttribute('data-selected', selectedValue);
-      loadTransactions();        // Aktualisiere die Transaktionstabelle
-      updateIncomeDoughnut();      // Aktualisiere den Income-Doughnut
-      updateSpendingsDoughnut();   // Aktualisiere den Spendings-Doughnut
+      loadTransactions();          // Tabelle aktualisieren
+      updateIncomeDoughnut();        // Income-Doughnut aktualisieren
+      updateSpendingsDoughnut();     // Spendings-Doughnut aktualisieren
+      updateSavingsDoughnut();       // Savings-Doughnut aktualisieren
     });
   });
 
-  // Zeitraum-Dropdown: Aktualisiere den Button (mit data-Attribut) und rufe beide Update-Funktionen auf
+  // Zeitraum-Dropdown
   const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
   const periodDropdownItems = document.querySelectorAll('.dropdown-menu[aria-labelledby="dropdownMenuButtonZeitraum"] .dropdown-item');
   periodDropdownItems.forEach(item => {
@@ -23,9 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("Zeitraum ausgewählt:", selectedValue);
       periodButton.innerText = selectedValue;
       periodButton.setAttribute('data-selected', selectedValue);
-      loadTransactions();        // Aktualisiere die Transaktionstabelle
-      updateIncomeDoughnut();      // Aktualisiere den Income-Doughnut
-      updateSpendingsDoughnut();   // Aktualisiere den Spendings-Doughnut
+      loadTransactions();          // Tabelle aktualisieren
+      updateIncomeDoughnut();        // Income-Doughnut aktualisieren
+      updateSpendingsDoughnut();     // Spendings-Doughnut aktualisieren
+      updateSavingsDoughnut();       // Savings-Doughnut aktualisieren
     });
   });
 });
