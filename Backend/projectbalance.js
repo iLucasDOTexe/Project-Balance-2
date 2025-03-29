@@ -201,40 +201,110 @@ app.get('/savingsQuote', (req, res) => {
 });
 
 app.get('/balanceBar', (req, res) => {
-    const labels = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-    let incomeData = new Array(12).fill(0);
-    let expensesData = new Array(12).fill(0);
-    let savingsData = new Array(12).fill(0);
-    db.all("SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Income GROUP BY month", (err, incomeRows) => {
-            if (err) return res.status(500).json({ error: err.message });
-            incomeRows.forEach(row => {
-                let monthIndex = parseInt(row.month, 10) - 1;
-                incomeData[monthIndex] = row.total;
-                });
-                db.all("SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Spendings GROUP BY month", (err, expenseRows) => {
-                    if (err) return res.status(500).json({ error: err.message });
-                    expenseRows.forEach(row => {
-                        let monthIndex = parseInt(row.month, 10) - 1;
-                        expensesData[monthIndex] = row.total;
-                    });
-                    db.all("SELECT strftime('%m', Transaction_Date) AS month, SUM(Transaction_Value) AS total FROM Savings GROUP BY month", (err, savingsRows) => {
-                        if (err) return res.status(500).json({ error: err.message });
-                        savingsRows.forEach(row => {
-                            let monthIndex = parseInt(row.month, 10) - 1;
-                            savingsData[monthIndex] = row.total;
-                        });
-                        res.json({
-                            labels,
-                            income: incomeData,
-                            expenses: expensesData,
-                            savings: savingsData
-                        });
-                    }
-                );
+    const year = req.query.year;
+    const selectedMonth = req.query.month; // falls vorhanden, z. B. "05"
+    const monthNames = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+    let startDate, endDate, labels;
+  
+    if (!selectedMonth) {
+      // Ganzes Jahr: Zeitraum = 01.01. bis 31.12.
+      startDate = `${year}-01-01`;
+      endDate = `${year}-12-31`;
+      labels = monthNames;
+    } else {
+      // Spezifischer Monat gewählt: 12-Monats-Fenster berechnen
+      const selMonthNum = parseInt(selectedMonth, 10); // z. B. 5 für Mai
+      // Enddatum: letzter Tag des ausgewählten Monats
+      const endDateObj = new Date(year, selMonthNum, 0); // Letzter Tag des Monats
+      endDate = `${year}-${("0" + selMonthNum).slice(-2)}-${("0" + endDateObj.getDate()).slice(-2)}`;
+  
+      // Startdatum: Erster Tag des Monats, der 11 Monate vor dem ausgewählten liegt
+      let startDateObj = new Date(year, selMonthNum - 1, 1);
+      startDateObj.setMonth(startDateObj.getMonth() - 11);
+      const sYear = startDateObj.getFullYear();
+      const sMonth = ("0" + (startDateObj.getMonth() + 1)).slice(-2);
+      const sDay = ("0" + startDateObj.getDate()).slice(-2);
+      startDate = `${sYear}-${sMonth}-${sDay}`;
+  
+      // Labels für das 12-Monats-Fenster berechnen:
+      labels = [];
+      let tempDate = new Date(startDateObj);
+      for (let i = 0; i < 12; i++) {
+        labels.push(monthNames[tempDate.getMonth()]);
+        tempDate.setMonth(tempDate.getMonth() + 1);
+      }
+    }
+  
+    // Arrays mit 12 Feldern (oder 12 Elementen, falls Ganzes Jahr)
+    let incomeData = new Array(labels.length).fill(0);
+    let expensesData = new Array(labels.length).fill(0);
+    let savingsData = new Array(labels.length).fill(0);
+  
+    // Wir gruppieren hier nach Jahr-Monat (Format "YYYY-MM")
+    const queryIncome = `
+      SELECT strftime('%Y-%m', Transaction_Date) AS ym, SUM(Transaction_Value) AS total
+      FROM Income
+      WHERE Transaction_Date BETWEEN ? AND ?
+      GROUP BY ym
+    `;
+    db.all(queryIncome, [startDate, endDate], (err, incomeRows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      incomeRows.forEach(row => {
+        // row.ym hat das Format "YYYY-MM"
+        const [rowYear, rowMonth] = row.ym.split('-').map(Number);
+        const [sYear, sMonth] = startDate.split('-').map(Number);
+        // Berechne den Index als Differenz in Monaten:
+        const index = (rowYear - sYear) * 12 + (rowMonth - sMonth);
+        if (index >= 0 && index < incomeData.length) {
+          incomeData[index] = row.total;
+        }
+      });
+  
+      const queryExpenses = `
+        SELECT strftime('%Y-%m', Transaction_Date) AS ym, SUM(Transaction_Value) AS total
+        FROM Spendings
+        WHERE Transaction_Date BETWEEN ? AND ?
+        GROUP BY ym
+      `;
+      db.all(queryExpenses, [startDate, endDate], (err, expenseRows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        expenseRows.forEach(row => {
+          const [rowYear, rowMonth] = row.ym.split('-').map(Number);
+          const [sYear, sMonth] = startDate.split('-').map(Number);
+          const index = (rowYear - sYear) * 12 + (rowMonth - sMonth);
+          if (index >= 0 && index < expensesData.length) {
+            expensesData[index] = row.total;
+          }
+        });
+  
+        const querySavings = `
+          SELECT strftime('%Y-%m', Transaction_Date) AS ym, SUM(Transaction_Value) AS total
+          FROM Savings
+          WHERE Transaction_Date BETWEEN ? AND ?
+          GROUP BY ym
+        `;
+        db.all(querySavings, [startDate, endDate], (err, savingsRows) => {
+          if (err) return res.status(500).json({ error: err.message });
+          savingsRows.forEach(row => {
+            const [rowYear, rowMonth] = row.ym.split('-').map(Number);
+            const [sYear, sMonth] = startDate.split('-').map(Number);
+            const index = (rowYear - sYear) * 12 + (rowMonth - sMonth);
+            if (index >= 0 && index < savingsData.length) {
+              savingsData[index] = row.total;
             }
-        );
+          });
+  
+          res.json({
+            labels,
+            income: incomeData,
+            expenses: expensesData,
+            savings: savingsData
+          });
+        });
+      });
     });
-});
+  });
+  
 
 app.get('/incomeDoughnut', (req, res) => {
     const year = req.query.year;

@@ -1,29 +1,61 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Hole zuerst die Daten vom neuen API-Endpunkt
-  fetch('/balanceBar')
+function updateBalanceBar() {
+  const yearButton = document.getElementById('dropdownMenuButtonJahr');
+  const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
+  const selectedYear = yearButton ? yearButton.innerText.trim() : '';
+  // Wert aus data-Attribut, z. B. "Ganzes Jahr" oder "Mai"
+  const selectedPeriod = periodButton ? periodButton.getAttribute('data-selected') : '';
+
+  let url = `/balanceBar?year=${selectedYear}`;
+  if (selectedPeriod !== 'Ganzes Jahr') {
+    const months = {
+      'Januar': '01',
+      'Februar': '02',
+      'März': '03',
+      'April': '04',
+      'Mai': '05',
+      'Juni': '06',
+      'Juli': '07',
+      'August': '08',
+      'September': '09',
+      'Oktober': '10',
+      'November': '11',
+      'Dezember': '12'
+    };
+    const monthNum = months[selectedPeriod];
+    url += `&month=${monthNum}`;
+  }
+
+  console.log("BalanceBar – selectedYear:", selectedYear, "selectedPeriod:", selectedPeriod);
+  console.log("Fetching URL:", url);
+
+  fetch(url)
     .then(response => response.json())
     .then(data => {
       const ctx = document.getElementById('balance_bar').getContext('2d');
-      const trackedBarChart = new Chart(ctx, {
+      // Falls bereits ein Chart existiert, zerstören
+      if (window.trackedBarChart) {
+        window.trackedBarChart.destroy();
+      }
+      window.trackedBarChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: data.labels, // z. B. ['Jan', 'Feb', ... , 'Dez']
+          labels: data.labels,
           datasets: [
             {
               label: 'Einkommen',
-              data: data.income, // Aggregierte Werte für Income pro Monat
-              backgroundColor: 'rgb(5, 46, 22)', 
+              data: data.income,
+              backgroundColor: 'rgb(5, 46, 22)',
               stack: 'Stack 1'
             },
             {
               label: 'Ausgaben',
-              data: data.expenses, // Aggregierte Werte für Expenses pro Monat
+              data: data.expenses,
               backgroundColor: 'rgb(69, 10, 10)',
               stack: 'Stack 2'
             },
             {
               label: 'Sparen',
-              data: data.savings, // Aggregierte Werte für Savings pro Monat
+              data: data.savings,
               backgroundColor: 'rgb(23, 37, 84)',
               stack: 'Stack 2'
             }
@@ -33,20 +65,19 @@ document.addEventListener('DOMContentLoaded', function() {
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            x: {
-              stacked: false
-            },
-            y: {
-              stacked: true
-            }
+            x: { stacked: false },
+            y: { stacked: true }
           },
           plugins: {
-            legend: {
-              display: false,
-            }
+            legend: { display: false }
           }
         }
       });
     })
     .catch(error => console.error('Error loading monthly data:', error));
+}
+
+// Initialer Aufruf
+document.addEventListener('DOMContentLoaded', function() {
+  updateBalanceBar();
 });
