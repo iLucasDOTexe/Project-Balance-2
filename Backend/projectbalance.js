@@ -180,25 +180,43 @@ app.get('/availableIncome', (req, res) => {
   });
   
 
-app.get('/spendingsMade', (req, res) => {
-    db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income", (err, incomeRow) => {
+  app.get('/spendingsMade', (req, res) => {
+    const year = req.query.year;
+    const month = req.query.month;
+    let whereClause = '';
+    let params = [];
+  
+    if (year) {
+      whereClause = "WHERE strftime('%Y', Transaction_Date) = ?";
+      params.push(year);
+      if (month) {
+        whereClause += " AND strftime('%m', Transaction_Date) = ?";
+        params.push(month);
+      }
+    }
+  
+    // Summe der Einnahmen im Zeitraum
+    db.get(`SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income ${whereClause}`, params, (err, incomeRow) => {
+      if (err) {
+        console.error("Error calculating income sum: ", err.message);
+        return res.status(500).json({ error: err.message });
+      }
+      const incomeSum = incomeRow.incomeSum;
+      
+      // Summe der Ausgaben im Zeitraum
+      db.get(`SELECT IFNULL(SUM(Transaction_Value), 0) AS spendingsSum FROM Spendings ${whereClause}`, params, (err, spendingRow) => {
         if (err) {
-            console.error("Error calculating income sum: ", err.message);
-            return res.status(500).json({ error: err.message });
+          console.error("Error calculating spendings sum: ", err.message);
+          return res.status(500).json({ error: err.message });
         }
-        const incomeSum = incomeRow.incomeSum;
-        db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS spendingsSum FROM Spendings", (err, spendingRow) => {
-            if (err) {
-                console.error("Error calculating spendings sum: ", err.message);
-                return res.status(500).json({ error: err.message });
-            }
-            const spendingsSum = spendingRow.spendingsSum;
-            const absolute = spendingsSum;
-            const relative = incomeSum ? (absolute / incomeSum) * 100 : 0;
-            res.json({ absolute, relative });
-        });
+        const spendingsSum = spendingRow.spendingsSum;
+        const absolute = spendingsSum;
+        const relative = incomeSum ? (absolute / incomeSum) * 100 : 0;
+        res.json({ absolute, relative });
+      });
     });
-});
+  });
+  
 
 app.get('/savingsQuote', (req, res) => {
     db.get("SELECT IFNULL(SUM(Transaction_Value), 0) AS incomeSum FROM Income", (err, incomeRow) => {

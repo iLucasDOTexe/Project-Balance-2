@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateSavingsDoughnut();       // Savings-Doughnut aktualisieren
       updateBalanceBar();
       loadAvailableIncome();
+      loadSpendingsMade();
     });
   });
 
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateSavingsDoughnut();       // Savings-Doughnut aktualisieren
       updateBalanceBar();
       loadAvailableIncome();
+      loadSpendingsMade();
     });
   });
 });
