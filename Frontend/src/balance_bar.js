@@ -71,27 +71,24 @@ function updateBalanceBar() {
           plugins: {
             legend: { display: false },
             tooltip: {
-              // Ändere den Modus, sodass pro Dataset getrennte Tooltips angezeigt werden
               mode: 'dataset',
               intersect: true,
               callbacks: {
-                // Entfernt den Titel (normalerweise der x-Achsen-Wert)
+                // Kein Titel – damit wird die x-Achse nicht angezeigt
                 title: function(tooltipItems) {
                   return '';
                 },
-                // Zeigt nur den Datensatznamen und den formatierten Wert an
+                // Hier wird der aggregierte Gesamtwert des Datensatzes angezeigt
                 label: function(context) {
                   const datasetLabel = context.dataset.label || '';
-                  const value = context.parsed.y; // für vertikale Balken
-                  return datasetLabel + ': ' + value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
+                  const total = context.dataset.data.reduce((acc, val) => acc + Number(val), 0);
+                  return datasetLabel + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
                 }
               }
-            }
+            }            
           }
         }
-      });
-      
-      
+      });       
     })
     .catch(error => console.error('Error loading monthly data:', error));
 }
