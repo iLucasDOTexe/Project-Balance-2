@@ -78,16 +78,17 @@ function updateSavingsDoughnut() {
       const legendContainer = document.getElementById('savings_doughnut_legend');
       const dataValues = window.savingsChart.data.datasets[0].data;
       const total = dataValues.reduce((acc, val) => acc + val, 0);
-      const legendItems = window.incomeChart.data.labels.map((label, index) => {
-        const bgColor = window.incomeChart.data.datasets[0].backgroundColor[index];
+      const legendItems = window.savingsChart.data.labels.map((label, index) => {
+        const bgColor = window.savingsChart.data.datasets[0].backgroundColor[index];
         const value = dataValues[index];
         return `
           <li class="d-flex align-items-center mb-2">
             <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
             <span class="me-auto" style="display:inline-block; width:100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${label}</span>
             <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</span>
-          </li>`;
-      });
+          </li>
+        `;
+      });      
       
       legendContainer.innerHTML = `
         <ul class="list-unstyled m-0">
