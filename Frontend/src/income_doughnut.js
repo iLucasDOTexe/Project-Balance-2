@@ -87,7 +87,7 @@ function updateIncomeDoughnut() {
         return `
           <li class="d-flex align-items-center mb-2">
             <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
-            <span class="me-auto" style="display:inline-block; width:120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${label}</span>
+            <span class="me-auto" style="display:inline-block; width:100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${label}</span>
             <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</span>
           </li>`;
       });
