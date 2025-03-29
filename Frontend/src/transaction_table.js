@@ -40,8 +40,8 @@ function loadTransactions() {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${tx.date}</td>
-            <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">${tx.name}</td>
-            <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">${tx.category}</td>
+            <td><div style="display:inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;">${tx.name}</div></td>
+            <td><div style="display:inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;">${tx.category}</div></td>
             <td>${valueFormatted}€</td>
             <td>
               <div class="dropdown">
