@@ -1,8 +1,10 @@
+// In income_doughnut.js
 function updateIncomeDoughnut() {
   const yearButton = document.getElementById('dropdownMenuButtonJahr');
   const periodButton = document.getElementById('dropdownMenuButtonZeitraum');
   const selectedYear = yearButton ? yearButton.innerText.trim() : '';
-  const selectedPeriod = periodButton ? periodButton.innerText.trim() : '';
+  // Hier wird der Wert aus dem data-Attribut ausgelesen:
+  const selectedPeriod = periodButton ? periodButton.getAttribute('data-selected') : '';
 
   let url = `/incomeDoughnut?year=${selectedYear}`;
   if (selectedPeriod !== 'Ganzes Jahr') {
@@ -24,6 +26,9 @@ function updateIncomeDoughnut() {
     url += `&month=${monthNum}`;
   }
 
+  console.log("selectedYear:", selectedYear, "selectedPeriod:", selectedPeriod);
+  console.log("Fetching URL:", url);
+
   fetch(url)
     .then(response => response.json())
     .then(result => {
@@ -36,7 +41,7 @@ function updateIncomeDoughnut() {
         'rgb(34, 197, 94)'
       ];
 
-      // Falls bereits ein Chart existiert, diesen zerstören
+      // Bestehenden Chart zerstören, falls vorhanden
       if(window.incomeChart) {
         window.incomeChart.destroy();
       }
@@ -91,21 +96,9 @@ function updateIncomeDoughnut() {
       `;
     })
     .catch(error => console.error('Error loading income data:', error));
-    console.log("selectedYear:", selectedYear, "selectedPeriod:", selectedPeriod);
-    console.log("Fetching URL:", url);
 }
 
-// Initialer Aufruf und Event-Listener hinzufügen
+// Initialer Aufruf
 document.addEventListener('DOMContentLoaded', function() {
-  // Initiales Laden des Charts
   updateIncomeDoughnut();
-
-  // Beispiel: Event-Listener für Dropdown-Änderungen (anpassen an Ihre konkrete Struktur)
-  document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', function() {
-      // Optional: Aktualisieren Sie hier den Text des jeweiligen Dropdown-Buttons,
-      // falls das nicht automatisch passiert.
-      updateIncomeDoughnut();
-    });
-  });
 });
