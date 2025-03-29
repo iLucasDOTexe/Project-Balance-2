@@ -85,7 +85,7 @@ function updateSavingsDoughnut() {
           <li class="d-flex align-items-center mb-2">
             <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
             <span class="me-auto">${label}</span>
-            <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</span>
           </li>
         `;
       });
@@ -96,7 +96,7 @@ function updateSavingsDoughnut() {
           <hr class="my-2" />
           <li class="d-flex fw-bold">
             <span class="me-auto">Total</span>
-            <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</span>
           </li>
         </ul>
       `;
