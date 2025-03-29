@@ -40,10 +40,10 @@ function loadTransactions() {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${tx.date}</td>
-            <td style="width: 300px;">
+            <td style="width: 600px;">
               <div style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${tx.name}</div>
             </td>
-            <td style="width: 300px;">
+            <td style="width: 600px;">
               <div style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${tx.category}</div>
             </td>
             <td>${valueFormatted}€</td>
