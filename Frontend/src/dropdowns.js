@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadSpendingsMade();
       loadSavingsQuote();
       updateTransactionsHeading();
+      updateStatisticsHeading()
     });
   });
 
@@ -38,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
       loadSpendingsMade();
       loadSavingsQuote();
       updateTransactionsHeading();
+      updateStatisticsHeading()
     });
   });
   updateTransactionsHeading();
+  updateStatisticsHeading();
 });
