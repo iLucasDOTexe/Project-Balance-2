@@ -72,6 +72,14 @@ function updateSpendingsDoughnut() {
               legend: {
                 display: false
               }
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    const value = context.parsed;
+                    return value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
+                  }
+                }
+              }
             }
           }
         });
@@ -88,7 +96,7 @@ function updateSpendingsDoughnut() {
             <li class="d-flex align-items-center mb-2">
               <span style="display:inline-block;width:20px;height:20px;background-color:${bgColor};margin-right:10px;"></span>
               <span class="me-auto">${label}</span>
-              <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              <span>${value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</span>
             </li>`;
         });
         
@@ -98,7 +106,7 @@ function updateSpendingsDoughnut() {
             <hr class="my-2" />
             <li class="d-flex fw-bold">
               <span class="me-auto">Total</span>
-              <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              <span>${total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</span>
             </li>
           </ul>
         `;
