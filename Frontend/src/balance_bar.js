@@ -62,36 +62,44 @@ function updateBalanceBar() {
           ]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { // Globaler Tooltip-Interaktionsmodus
-            mode: 'dataset',
-            intersect: true
-          },
-          scales: {
-            x: { stacked: false },
-            y: { stacked: true }
-          },
           plugins: {
-            legend: { display: false },
             tooltip: {
-              mode: 'dataset',
-              intersect: true,
-              callbacks: {
-                title: () => '', // kein Titel
-                label: function(context) {
-                  const dataset = context.dataset;
-                  const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
-                  return dataset.label + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
-                }
-              }
+              enabled: false,  // Standard-Tooltip ausschalten
+              external: myCustomTooltip  // Eigene Funktion
             }
           }
-        }
+        }        
       });      
     })
     .catch(error => console.error('Error loading monthly data:', error));
 }
+
+function myCustomTooltip(context) {
+  // Tooltip-Konfiguration
+  const { chart, tooltip } = context;
+  
+  // Falls kein Tooltip aktiv ist oder man nicht über einem Dataset schwebt:
+  if (!tooltip || !tooltip.opacity || !tooltip.dataPoints?.length) {
+    // Tooltipp ausblenden
+    hideMyTooltipDiv();
+    return;
+  }
+  
+  // Wir holen uns den Datensatz, über dem wir gerade schweben
+  const dataIndex = tooltip.dataPoints[0].dataIndex;
+  const datasetIndex = tooltip.dataPoints[0].datasetIndex;
+  const dataset = chart.data.datasets[datasetIndex];
+  
+  // Gesamtwert des Datensatzes berechnen
+  const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
+  const labelText = `${dataset.label}: ${total.toLocaleString('de-DE', {
+    minimumFractionDigits: 2, maximumFractionDigits: 2
+  })}€`;
+
+  // Nun ein eigenes DIV befüllen/positionieren
+  showMyTooltipDiv(tooltip, labelText);
+}
+
 
 // Initialer Aufruf
 document.addEventListener('DOMContentLoaded', function() {
