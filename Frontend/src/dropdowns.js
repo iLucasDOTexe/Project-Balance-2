@@ -17,8 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadSpendingsMade();
       loadSavingsQuote();
       updateTransactionsHeading();
-      updateStatisticsHeading();
-      loadTaxationTransactions()
+      updateStatisticsHeading()
     });
   });
 
@@ -40,8 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadSpendingsMade();
       loadSavingsQuote();
       updateTransactionsHeading();
-      updateStatisticsHeading();
-      loadTaxationTransactions()
+      updateStatisticsHeading()
     });
   });
   updateTransactionsHeading();
