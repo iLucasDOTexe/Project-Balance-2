@@ -470,6 +470,38 @@ app.get('/incomeDoughnut', (req, res) => {
       res.json({ labels, data });
     });
   });
+
+  app.get('/taxationTransactions', (req, res) => {
+    const year = req.query.year;
+    if (!year) {
+      return res.status(400).json({ error: "Jahr wird benötigt" });
+    }
+    // Filter: Nur Einträge des gewählten Jahres und mit Transaction_Taxation = 1
+    const whereClause = "WHERE strftime('%Y', Transaction_Date) = ? AND Transaction_Taxation = 1";
+    const params = [year];
+  
+    const sql = `
+      SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'income' AS transactionType 
+      FROM Income ${whereClause}
+      UNION ALL 
+      SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'savings' AS transactionType 
+      FROM Savings ${whereClause}
+      UNION ALL 
+      SELECT Transaction_Number AS id, Transaction_Date AS date, Transaction_Name AS name, Transaction_Category AS category, Transaction_Value AS value, 'spendings' AS transactionType 
+      FROM Spendings ${whereClause}
+      ORDER BY date DESC
+    `;
+    // Wiederhole die Parameter für jede der drei Abfragen:
+    const unionParams = [...params, ...params, ...params];
+  
+    db.all(sql, unionParams, (err, rows) => {
+      if (err) {
+        console.error("Error while fetching taxation transactions: ", err.message);
+        return res.status(500).json({ error: err.message });
+      }
+      res.json({ transactions: rows });
+    });
+  });
   
   
 

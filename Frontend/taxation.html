@@ -35,17 +35,43 @@
       <div class="container text-center mt-4 px-4">
         <div class="row">
           <div class="col"> 
-            <div>
+            <!-- Dropdown 1: Year -->
+            <div class="border border-dark bg-white w-25">
+              <h5 class="fw-bold">Jahr</h5>
+              <div>
+                <button class="btn btn-secondary dropdown-toggle w-100 rounded-0" type="button" id="dropdownMenuButtonJahr" data-bs-toggle="dropdown" aria-expanded="false">
+                  2025
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonJahr">
+                  <li><a class="dropdown-item" href="#">2035</a></li>
+                  <li><a class="dropdown-item" href="#">2034</a></li>
+                  <li><a class="dropdown-item" href="#">2033</a></li>
+                  <li><a class="dropdown-item" href="#">2032</a></li>
+                  <li><a class="dropdown-item" href="#">2031</a></li>
+                  <li><a class="dropdown-item" href="#">2030</a></li>
+                  <li><a class="dropdown-item" href="#">2029</a></li>
+                  <li><a class="dropdown-item" href="#">2028</a></li>
+                  <li><a class="dropdown-item" href="#">2027</a></li>
+                  <li><a class="dropdown-item" href="#">2026</a></li>
+                  <li><a class="dropdown-item" href="#">2025</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-4">
               <div class="bg-dark text-white pb-1 pt-3 flex-fill">
                 <h5>Steuern sind Raub</h5>
               </div>
               <div class="border border-dark mt-1 mb-4 p-2 bg-white flex-fill text-start">
                 <table class="table table-hover text-start">
                   <thead class="table-light">
+                    <tr>
+                      <th scope="col">Datum</th>
+                      <th scope="col">Bezeichnung</th>
+                      <th scope="col">Kategorie</th>
+                      <th scope="col">Wert</th>
+                    </tr>
                   </thead>
-                  <tbody>
-                    
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
@@ -54,7 +80,7 @@
       </div>
       <!--End Category Legend-->
       <!--Start Footer-->
-      <footer class="text-center bg-white border-top">
+      <footer class="text-center bg-light border-top">
         <div class="text-center text-bg-dark pt-2 pb-2">
           © 2025 Copyright: Lucas Schwöbel (iLucas.exe)
         </div>
