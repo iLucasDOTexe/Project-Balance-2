@@ -71,24 +71,22 @@ function updateBalanceBar() {
           plugins: {
             legend: { display: false },
             tooltip: {
-              mode: 'dataset',   // Doppelt hält besser: hier auch
+              mode: 'dataset',
               intersect: true,
-              filter: function(item) {
-                // Zeige nur den Datenpunkt mit dataIndex === 0 (oder einen beliebigen Index)
-                return item.dataIndex === 0;
-              },
+              position: 'nearest', // Versucht, den Tooltip in der Nähe des Mauszeigers zu platzieren
+              xAlign: 'center',
+              yAlign: 'center',
+              caretPadding: 10, // Abstand zwischen Tooltip und Balken – passe das ggf. an
               callbacks: {
                 title: () => '',
                 label: function(context) {
                   const dataset = context.dataset;
                   const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
-                  return dataset.label + ': ' + total.toLocaleString('de-DE', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  }) + '€';
+                  return dataset.label + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
                 }
               }
             }
+            
           }
         }               
       });      
