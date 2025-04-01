@@ -78,6 +78,9 @@ function updateBalanceBar() {
               yAlign: 'center',
               caretPadding: 10, // Abstand zwischen Tooltip und Balken – passe das ggf. an
               callbacks: {
+                filter: function(tooltipItem) {
+                  return tooltipItem.dataIndex === 0;
+                },
                 title: () => '',
                 label: function(context) {
                   const dataset = context.dataset;
