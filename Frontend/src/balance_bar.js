@@ -75,20 +75,20 @@ function updateBalanceBar() {
           plugins: {
             legend: { display: false },
             tooltip: {
+              mode: 'dataset',
+              intersect: true,
               callbacks: {
-                filter: function(tooltipItem) {
-                  return tooltipItem.dataIndex === 0;
+                title: () => '',
+                beforeLabel: (tooltipItems) => {
+                  const dataset = tooltipItems[0].dataset;
+                  const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
+                  return dataset.label + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
                 },
-                title: function(tooltipItems) {
-                  return '';
-                },
-                label: function(context) {
-                  const datasetLabel = context.dataset.label || '';
-                  const total = context.dataset.data.reduce((acc, val) => acc + Number(val), 0);
-                  return datasetLabel + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
-                }
+                label: () => '',
+                footer: () => ''
               }
             }
+            
           }
         }
       });
