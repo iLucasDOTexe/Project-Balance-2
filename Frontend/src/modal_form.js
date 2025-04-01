@@ -84,7 +84,7 @@ function sendFormData(event) {
     const normalizedValue = rawValue.replace(',', '.');
     const transactionValue = parseFloat(normalizedValue);
     const transactionCategory = form.categorySelection.value; // Kann bei "income" deaktiviert sein
-    //const taxation = document.getElementById('taxationCheck').checked ? 1 : 0;
+    const taxation = document.getElementById('taxationCheck').checked ? 1 : 0;
   
     // Daten-Objekt zusammenstellen
     const data = {
@@ -93,7 +93,7 @@ function sendFormData(event) {
       transactionDate,
       transactionValue,
       transactionCategory,
-      //taxation
+      taxation
     };
   
     // Senden der Daten an den API-Endpunkt /transaction

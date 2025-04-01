@@ -11,19 +11,19 @@ let db = new sqlite3.Database(dbPath, (err) => {
     console.log("Database connected");
 
     db.serialize(() => {
-        db.run('CREATE TABLE IF NOT EXISTS Income (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
+        db.run('CREATE TABLE IF NOT EXISTS Income (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL, Transaction_Taxation INTEGER NOT NULL)', (err) => {
             if (err) {
                 return console.error("Error during creation of Income Table: ", err.message);
             }
             console.log("Table Income created or already existing");
         });
-        db.run('CREATE TABLE IF NOT EXISTS Savings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
+        db.run('CREATE TABLE IF NOT EXISTS Savings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL, Transaction_Taxation INTEGER NOT NULL)', (err) => {
             if (err) {
                 return console.error("Error during creation of Savings Table: ", err.message);
             }
             console.log("Table Savings created or already existing");
         });
-        db.run('CREATE TABLE IF NOT EXISTS Spendings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL)', (err) => {
+        db.run('CREATE TABLE IF NOT EXISTS Spendings (Transaction_Number INTEGER PRIMARY KEY AUTOINCREMENT, Transaction_Name TEXT NOT NULL, Transaction_Category TEXT NOT NULL, Transaction_Value REAL NOT NULL, Transaction_Date TEXT NOT NULL, Transaction_Taxation INTEGER NOT NULL)', (err) => {
             if (err) {
                 return console.error("Error during creation of Spendings Table: ", err.message);
             }
@@ -36,10 +36,10 @@ app.use(express.static('Frontend'));
 app.use(express.json());
 
 app.post('/newTransaction', (req, res) => {
-    const {transactionType, transactionName, transactionDate, transactionValue, transactionCategory} = req.body;
+    const {transactionType, transactionName, transactionDate, transactionValue, transactionCategory, taxation} = req.body;
     if (transactionType === 'income') {
-        const sql = `INSERT INTO Income (transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date) VALUES (?, ?, ?, ?)`;
-        db.run(sql, [transactionCategory, transactionCategory, transactionValue, transactionDate], function(err) {
+        const sql = `INSERT INTO Income (transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?)`;
+        db.run(sql, [transactionCategory, transactionCategory, transactionValue, transactionDate, taxation], function(err) {
             if (err) {
                 console.error("Error inserting Income: ", err.message);
                 return res.status(500).json({error: err.message});
@@ -47,8 +47,8 @@ app.post('/newTransaction', (req, res) => {
             res.json({ message: "Income transaction inserted", id: this.lastID });
         });
     } else if (transactionType === 'savings') {
-        const sql = `INSERT INTO Savings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date) VALUES (?, ?, ?, ?)`;
-        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate], function(err) {
+        const sql = `INSERT INTO Savings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?)`;
+        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate, transaction], function(err) {
             if (err) {
                 console.error("Error inserting Savings:", err.message);
                 return res.status(500).json({ error: err.message });
@@ -56,8 +56,8 @@ app.post('/newTransaction', (req, res) => {
             res.json({ message: "Savings transaction inserted", id: this.lastID });
         });
     } else if (transactionType === 'spendings') {
-        const sql = `INSERT INTO Spendings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date) VALUES (?, ?, ?, ?)`;
-        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate], function(err) {
+        const sql = `INSERT INTO Spendings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?)`;
+        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate, transaction], function(err) {
             if (err) {
                 console.error("Error inserting Spendings:", err.message);
                 return res.status(500).json({ error: err.message });
