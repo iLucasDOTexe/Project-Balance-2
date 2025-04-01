@@ -38,7 +38,7 @@ app.use(express.json());
 app.post('/newTransaction', (req, res) => {
     const {transactionType, transactionName, transactionDate, transactionValue, transactionCategory, taxation} = req.body;
     if (transactionType === 'income') {
-        const sql = `INSERT INTO Income (transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?)`;
+        const sql = `INSERT INTO Income (transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?, ?)`;
         db.run(sql, [transactionCategory, transactionCategory, transactionValue, transactionDate, taxation], function(err) {
             if (err) {
                 console.error("Error inserting Income: ", err.message);
@@ -47,8 +47,8 @@ app.post('/newTransaction', (req, res) => {
             res.json({ message: "Income transaction inserted", id: this.lastID });
         });
     } else if (transactionType === 'savings') {
-        const sql = `INSERT INTO Savings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?)`;
-        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate, transaction], function(err) {
+        const sql = `INSERT INTO Savings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?, ?)`;
+        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate, taxation], function(err) {
             if (err) {
                 console.error("Error inserting Savings:", err.message);
                 return res.status(500).json({ error: err.message });
@@ -56,8 +56,8 @@ app.post('/newTransaction', (req, res) => {
             res.json({ message: "Savings transaction inserted", id: this.lastID });
         });
     } else if (transactionType === 'spendings') {
-        const sql = `INSERT INTO Spendings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?)`;
-        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate, transaction], function(err) {
+        const sql = `INSERT INTO Spendings (Transaction_Name, Transaction_Category, Transaction_Value, Transaction_Date, Transaction_Taxation) VALUES (?, ?, ?, ?, ?)`;
+        db.run(sql, [transactionName, transactionCategory, transactionValue, transactionDate, taxation], function(err) {
             if (err) {
                 console.error("Error inserting Spendings:", err.message);
                 return res.status(500).json({ error: err.message });
