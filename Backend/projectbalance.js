@@ -494,6 +494,9 @@ app.get('/incomeDoughnut', (req, res) => {
     // Wiederhole die Parameter für jede der drei Abfragen:
     const unionParams = [...params, ...params, ...params];
   
+    // Debug-Ausgabe:
+    console.log("Year:", year, "UnionParams:", unionParams);
+  
     db.all(sql, unionParams, (err, rows) => {
       if (err) {
         console.error("Error while fetching taxation transactions: ", err.message);
@@ -502,6 +505,7 @@ app.get('/incomeDoughnut', (req, res) => {
       res.json({ transactions: rows });
     });
   });
+  
   
   
 
