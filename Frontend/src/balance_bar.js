@@ -64,7 +64,7 @@ function updateBalanceBar() {
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          interaction: {            // <-- Neu!
+          interaction: { // Globaler Tooltip-Interaktionsmodus
             mode: 'dataset',
             intersect: true
           },
@@ -76,11 +76,13 @@ function updateBalanceBar() {
             legend: { display: false },
             tooltip: {
               callbacks: {
+                filter: function(tooltipItem) {
+                  return tooltipItem.dataIndex === 0;
+                },
                 title: function(tooltipItems) {
-                  return '';  // Keine x-Achsen-Beschriftung
+                  return '';
                 },
                 label: function(context) {
-                  // Gesamtsumme für den Datensatz berechnen:
                   const datasetLabel = context.dataset.label || '';
                   const total = context.dataset.data.reduce((acc, val) => acc + Number(val), 0);
                   return datasetLabel + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
@@ -90,6 +92,7 @@ function updateBalanceBar() {
           }
         }
       });
+      
             
     })
     .catch(error => console.error('Error loading monthly data:', error));
