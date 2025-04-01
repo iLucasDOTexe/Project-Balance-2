@@ -62,44 +62,39 @@ function updateBalanceBar() {
           ]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'dataset',     // Nur ein Tooltip pro Dataset
+            intersect: true
+          },
           plugins: {
+            legend: { display: false },
             tooltip: {
-              enabled: false,  // Standard-Tooltip ausschalten
-              external: myCustomTooltip  // Eigene Funktion
+              mode: 'dataset',   // Doppelt hält besser: hier auch
+              intersect: true,
+              filter: function(item) {
+                // Zeige nur den Datenpunkt mit dataIndex === 0 (oder einen beliebigen Index)
+                return item.dataIndex === 0;
+              },
+              callbacks: {
+                title: () => '',
+                label: function(context) {
+                  const dataset = context.dataset;
+                  const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
+                  return dataset.label + ': ' + total.toLocaleString('de-DE', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }) + '€';
+                }
+              }
             }
           }
-        }        
+        }               
       });      
     })
     .catch(error => console.error('Error loading monthly data:', error));
 }
-
-function myCustomTooltip(context) {
-  // Tooltip-Konfiguration
-  const { chart, tooltip } = context;
-  
-  // Falls kein Tooltip aktiv ist oder man nicht über einem Dataset schwebt:
-  if (!tooltip || !tooltip.opacity || !tooltip.dataPoints?.length) {
-    // Tooltipp ausblenden
-    hideMyTooltipDiv();
-    return;
-  }
-  
-  // Wir holen uns den Datensatz, über dem wir gerade schweben
-  const dataIndex = tooltip.dataPoints[0].dataIndex;
-  const datasetIndex = tooltip.dataPoints[0].datasetIndex;
-  const dataset = chart.data.datasets[datasetIndex];
-  
-  // Gesamtwert des Datensatzes berechnen
-  const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
-  const labelText = `${dataset.label}: ${total.toLocaleString('de-DE', {
-    minimumFractionDigits: 2, maximumFractionDigits: 2
-  })}€`;
-
-  // Nun ein eigenes DIV befüllen/positionieren
-  showMyTooltipDiv(tooltip, labelText);
-}
-
 
 // Initialer Aufruf
 document.addEventListener('DOMContentLoaded', function() {
