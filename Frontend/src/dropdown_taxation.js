@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("Jahr ausgewählt:", selectedValue);
       yearButton.innerText = selectedValue;
       yearButton.setAttribute('data-selected', selectedValue);
-      updateStatisticsHeading()
+      loadTaxationTransactions()
     });
   });
 });
