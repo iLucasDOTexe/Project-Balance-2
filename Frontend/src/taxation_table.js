@@ -1,4 +1,5 @@
 function loadTaxationTransactions() {
+  console.log("loadTaxationTransactions triggered");
   // Lese den gewählten Jahrwert aus dem Dropdown aus:
   const yearButton = document.getElementById('dropdownMenuButtonJahr');
   const selectedYear = yearButton ? yearButton.innerText.trim() : '';

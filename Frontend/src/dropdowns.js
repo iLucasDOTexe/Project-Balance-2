@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadSavingsQuote();
       updateTransactionsHeading();
       updateStatisticsHeading();
-      loadTaxationTransactions();
+      loadTaxationTransactions()
     });
   });
 
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadSavingsQuote();
       updateTransactionsHeading();
       updateStatisticsHeading();
+      loadTaxationTransactions()
     });
   });
   updateTransactionsHeading();
