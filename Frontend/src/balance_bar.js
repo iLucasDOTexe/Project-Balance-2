@@ -64,6 +64,10 @@ function updateBalanceBar() {
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          interaction: {            // <-- Neu!
+            mode: 'dataset',
+            intersect: true
+          },
           scales: {
             x: { stacked: false },
             y: { stacked: true }
@@ -71,24 +75,22 @@ function updateBalanceBar() {
           plugins: {
             legend: { display: false },
             tooltip: {
-              mode: 'dataset',
-              intersect: true,
               callbacks: {
-                // Kein Titel – damit wird die x-Achse nicht angezeigt
                 title: function(tooltipItems) {
-                  return '';
+                  return '';  // Keine x-Achsen-Beschriftung
                 },
-                // Hier wird der aggregierte Gesamtwert des Datensatzes angezeigt
                 label: function(context) {
+                  // Gesamtsumme für den Datensatz berechnen:
                   const datasetLabel = context.dataset.label || '';
                   const total = context.dataset.data.reduce((acc, val) => acc + Number(val), 0);
                   return datasetLabel + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
                 }
               }
-            }            
+            }
           }
         }
-      });       
+      });
+            
     })
     .catch(error => console.error('Error loading monthly data:', error));
 }
