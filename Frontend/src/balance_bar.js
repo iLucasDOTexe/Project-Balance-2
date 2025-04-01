@@ -78,22 +78,17 @@ function updateBalanceBar() {
               mode: 'dataset',
               intersect: true,
               callbacks: {
-                title: () => '',
-                beforeLabel: (tooltipItems) => {
-                  const dataset = tooltipItems[0].dataset;
+                title: () => '', // kein Titel
+                label: function(context) {
+                  const dataset = context.dataset;
                   const total = dataset.data.reduce((acc, val) => acc + Number(val), 0);
                   return dataset.label + ': ' + total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '€';
-                },
-                label: () => '',
-                footer: () => ''
+                }
               }
             }
-            
           }
         }
-      });
-      
-            
+      });      
     })
     .catch(error => console.error('Error loading monthly data:', error));
 }
